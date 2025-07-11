@@ -17,7 +17,7 @@ const nameRegex = /^[A-Za-z ]+$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^[0-9]{10,15}$/;
 
-const BookServiceForm = () => {
+const BookServiceForm = ({ setShowBookServiceModal }) => {
   const [status, setStatus] = useState('idle');
   const [form, setForm] = useState({
     name: '',
@@ -27,6 +27,7 @@ const BookServiceForm = () => {
     message: '',
   });
   const [errors, setErrors] = useState({});
+  const [isClosing, setIsClosing] = useState(false);
 
   const validate = () => {
     const newErrors = {};
@@ -82,38 +83,47 @@ const BookServiceForm = () => {
     }
   };
 
-  // Add close handler
-  const handleClose = (e) => {
-    e.preventDefault();
-    window.dispatchEvent(new Event('closeBookServiceModal'));
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowBookServiceModal(false);
+    }, 300); // 300ms matches the CSS transition
   };
 
   return (
-    <div className="w-full flex justify-center items-center min-h-[20vh] p-2">
-      <form
-        onSubmit={handleSubmit}
-        className="relative w-full max-w-md md:max-w-xl backdrop-blur-xl bg-white/10 p-2 md:p-4 rounded-3xl border border-white/20 shadow-2xl hover:shadow-white/10 transition-all duration-500"
-        style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.10)' }}
-        noValidate
-      >
-        {/* Close Button */}
-        <button
-          type="button"
-          onClick={handleClose}
-          aria-label="Close"
-          className="absolute  right-2 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 text-gray-700 hover:bg-white hover:text-primary shadow focus:outline-none"
+    <div
+      id="book-service-modal"
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+    >
+      <div className="w-full max-w-sm sm:max-w-md md:max-w-xl relative p-1 sm:p-2 md:p-4">
+        <form
+          onSubmit={handleSubmit}
+          className="relative w-full backdrop-blur-2xl bg-white/10 p-6 sm:p-8 rounded-3xl border-2 border-gray-400/20 shadow-2xl hover:shadow-gray-400/10 transition-all duration-500 overflow-hidden"
+          style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.10)' }}
+          noValidate
         >
-          &times;
-        </button>
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center text-white bg-clip-text drop-shadow-lg">
-          Book a Service
-        </h2>
+          {/* Close Button (top-right, circular, black/grey theme, flush to margin) */}
+          <button
+            type="button"
+            onClick={handleClose}
+            aria-label="Close"
+            className="absolute top-0.5 right-3 w-8 aspect-square flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 hover:text-black shadow-md transition-all duration-200 z-10 border border-gray-300 p-0"
+            style={{ fontSize: '1.5rem', fontWeight: 'bold' }}
+          >
+            &times;
+          </button>
+
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center text-white drop-shadow-lg flex items-center justify-center gap-4">
+            Book a Service
+          </h2>
         {status === 'success' ? (
-          <div className="text-green-600 text-center font-semibold py-4">Thank you! Your enquiry has been submitted.</div>
+          <div className="text-green-500 text-center font-semibold py-4">Thank you! Your enquiry has been submitted.</div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-white/90 text-sm font-medium pl-1">Name<span className="text-red-500">*</span></label>
+                <label className="text-white/90 text-sm font-medium pl-1">
+                  Name<span className="text-red-400">*</span>
+                </label>
               <input
                 type="text"
                 name="name"
@@ -121,12 +131,15 @@ const BookServiceForm = () => {
                 onChange={handleChange}
                 required
                 placeholder="Your Name"
-                className={`w-full px-4 py-3 rounded-xl bg-white/10 border ${errors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:bg-white/20 transition-all duration-300 hover:border-white/20`}
+                className={`w-full px-4 py-3 rounded-xl bg-white/20 border ${errors.name ? 'border-red-400' : 'border-purple-300/30'} text-white placeholder-white/40 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-300 hover:border-purple-400/60`}
               />
-              {errors.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
+              {errors.name && <div className="text-red-400 text-sm mt-1">{errors.name}</div>}
             </div>
+
             <div className="space-y-2">
-              <label className="text-white/90 text-sm font-medium pl-1">Email<span className="text-red-500">*</span></label>
+                <label className="text-white/90 text-sm font-medium pl-1">
+                  Email<span className="text-red-400">*</span>
+                </label>
               <input
                 type="email"
                 name="email"
@@ -134,12 +147,15 @@ const BookServiceForm = () => {
                 onChange={handleChange}
                 required
                 placeholder="you@example.com"
-                className={`w-full px-4 py-3 rounded-xl bg-white/10 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:bg-white/20 transition-all duration-300 hover:border-white/20`}
+                className={`w-full px-4 py-3 rounded-xl bg-white/20 border ${errors.email ? 'border-red-400' : 'border-purple-300/30'} text-white placeholder-white/40 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-300 hover:border-purple-400/60`}
               />
-              {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
+              {errors.email && <div className="text-red-400 text-sm mt-1">{errors.email}</div>}
             </div>
+
             <div className="space-y-2">
-              <label className="text-white/90 text-sm font-medium pl-1">Phone<span className="text-red-500">*</span></label>
+                <label className="text-white/90 text-sm font-medium pl-1">
+                  Phone<span className="text-red-400">*</span>
+                </label>
               <input
                 type="tel"
                 name="phone"
@@ -147,26 +163,32 @@ const BookServiceForm = () => {
                 onChange={handleChange}
                 required
                 placeholder="Phone Number"
-                className={`w-full px-4 py-3 rounded-xl bg-white/10 border ${errors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:bg-white/20 transition-all duration-300 hover:border-white/20`}
+                className={`w-full px-4 py-3 rounded-xl bg-white/20 border ${errors.phone ? 'border-red-400' : 'border-purple-300/30'} text-white placeholder-white/40 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-300 hover:border-purple-400/60`}
               />
-              {errors.phone && <div className="text-red-500 text-sm mt-1">{errors.phone}</div>}
+              {errors.phone && <div className="text-red-400 text-sm mt-1">{errors.phone}</div>}
             </div>
+
             <div className="space-y-2">
-              <label className="text-white/90 text-sm font-medium pl-1">Service of Interest<span className="text-red-500">*</span></label>
+                <label className="text-white/90 text-sm font-medium pl-1">
+                  Service of Interest<span className="text-red-400">*</span>
+                </label>
               <select
                 name="service"
                 value={form.service}
                 onChange={handleChange}
                 required
-                className={`w-full px-4 py-3 rounded-xl bg-white/10 border ${errors.service ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:bg-white/20 transition-all duration-300 hover:border-white/20`}
+                className={`w-full px-4 py-3 rounded-xl bg-white/20 border ${errors.service ? 'border-red-400' : 'border-purple-300/30'} text-white placeholder-white/40 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-300 hover:border-purple-400/60`}
               >
                 <option value="">Select a service</option>
                 {SERVICES.map((service, idx) => (
-                  <option className='text-black' key={idx} value={service}>{service}</option>
+                    <option className="text-black" key={idx} value={service}>
+                      {service}
+                    </option>
                 ))}
               </select>
-              {errors.service && <div className="text-red-500 text-sm mt-1">{errors.service}</div>}
+              {errors.service && <div className="text-red-400 text-sm mt-1">{errors.service}</div>}
             </div>
+
             <div className="space-y-2">
               <label className="text-white/90 text-sm font-medium pl-1">Message (optional)</label>
               <textarea
@@ -175,20 +197,25 @@ const BookServiceForm = () => {
                 onChange={handleChange}
                 rows="3"
                 placeholder="How can we help you?"
-                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:bg-white/20 transition-all duration-300 hover:border-white/20 resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-purple-300/30 text-white placeholder-white/40 focus:outline-none focus:border-purple-400 focus:bg-white/30 transition-all duration-300 hover:border-purple-400/60 resize-none"
               ></textarea>
             </div>
+
             <button
               type="submit"
               disabled={status === 'submitting'}
-              className="w-full bg-white mt-4 text-primary font-semibold px-6 py-3 rounded-xl transform hover:-translate-y-1 hover:shadow-lg hover:shadow-white/20 active:translate-y-0 transition-all duration-300"
+              className="w-full bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-700 mt-4 text-white font-semibold px-6 py-3 rounded-xl transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-400/30 active:translate-y-0 transition-all duration-300 shadow-md"
             >
               {status === 'submitting' ? 'Submitting...' : 'Send Request'}
             </button>
-            {status === 'error' && <div className="text-red-600 text-center font-semibold py-2">Something went wrong. Please try again.</div>}
+
+              {status === 'error' && (
+                <div className="text-red-500 text-center font-semibold py-2">Something went wrong. Please try again.</div>
+              )}
           </div>
         )}
       </form>
+      </div>
     </div>
   );
 };

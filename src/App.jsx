@@ -25,18 +25,7 @@ const App = () => {
     <main className="min-h-screen relative">
       <Navbar />
       {showBookServiceModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-all duration-300" onClick={() => setShowBookServiceModal(false)}></div>
-          <motion.div
-            initial={{ opacity: 0, y: -80 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -80 }}
-            transition={{ duration: 0.5, type: 'spring', stiffness: 120 }}
-            className="relative z-10 max-w-xl w-full mx-4"
-          >
-            <BookServiceForm />
-          </motion.div>
-        </div>
+        <BookServiceForm setShowBookServiceModal={setShowBookServiceModal} />
       )}
       <Routes>
         <Route path="/" element={
