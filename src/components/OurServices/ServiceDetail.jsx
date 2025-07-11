@@ -64,6 +64,7 @@ const ServiceDetail = () => {
   const { serviceId } = useParams();
   const service = serviceDetails[serviceId];
   const [current, setCurrent] = useState(0);
+  const [showBookServiceModal, setShowBookServiceModal] = useState(false);
 
   if (!service) {
     return (
@@ -110,7 +111,17 @@ const ServiceDetail = () => {
         </div>
       </div>
       {/* BookServiceForm below */}
-      <BookServiceForm />
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={() => setShowBookServiceModal(true)}
+          className="bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-700 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+        >
+          Book Service
+        </button>
+      </div>
+      {showBookServiceModal && (
+        <BookServiceForm setShowBookServiceModal={setShowBookServiceModal} />
+      )}
     </div>
   );
 };

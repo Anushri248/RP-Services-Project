@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import { SlideDown } from '../Utility/animation';
 import logo from '../../assets/logo.png';
+import { HashLink } from 'react-router-hash-link';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,13 +34,13 @@ const Navbar = () => {
         >
             <div className="w-full max-w-7xl mx-auto  md:px-8 flex items-center justify-between">
                 <div className="flex ">
-                    <a href="#home" onClick={() => scrollToSection('home')} className="cursor-pointer">
+                    <HashLink to="/#home" smooth className="cursor-pointer">
                         <img 
                             src={logo} 
                             alt="RP Services Logo" 
                             className="h-16 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-110 hover:drop-shadow-2xl drop-shadow-lg py-2" 
                         />
-                    </a>
+                    </HashLink>
                 </div>
                 
                 {/* Mobile Menu Button */}
@@ -59,12 +60,11 @@ const Navbar = () => {
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center gap-8">
                     <ul className="flex items-center gap-8">
-                        <li><a href="#home" className="hover:text-primary transition-colors">Home</a></li>
-                        <li><a href="#services" className="hover:text-primary transition-colors">Our Services</a></li>
-                        <li><a href="#achievements" className="hover:text-primary transition-colors">Our Achievements</a></li>
-                        <li><a href="#about" className="hover:text-primary transition-colors">About Us</a></li>
-
-                        <li><a href="#contact" className="hover:text-primary transition-colors">Contact Us</a></li>
+                        <li><HashLink to="/#home" smooth className="hover:text-primary transition-colors">Home</HashLink></li>
+                        <li><HashLink to="/#services" smooth className="hover:text-primary transition-colors">Our Services</HashLink></li>
+                        <li><HashLink to="/#achievements" smooth className="hover:text-primary transition-colors">Our Achievements</HashLink></li>
+                        <li><HashLink to="/#about" smooth className="hover:text-primary transition-colors">About Us</HashLink></li>
+                        <li><HashLink to="/#contact" smooth className="hover:text-primary transition-colors">Contact Us</HashLink></li>
                     </ul>
                     <button 
                         onClick={handleBookServiceClick}
@@ -85,19 +85,19 @@ const Navbar = () => {
                 >
                     <ul className="w-full max-w-7xl mx-auto py-4 px-4 flex flex-col gap-4">
                         <li>
-                            <a href="#home" onClick={() => scrollToSection('home')} className="block py-2 hover:text-primary transition-colors">Home</a>
+                            <HashLink to="/#home" smooth className="block py-2 hover:text-primary transition-colors">Home</HashLink>
                         </li>
                         <li>
-                            <a href="#services" onClick={() => scrollToSection('services')} className="block py-2 hover:text-primary transition-colors">Our Services</a>
+                            <HashLink to="/#services" smooth className="block py-2 hover:text-primary transition-colors">Our Services</HashLink>
                         </li>
                         <li>
-                            <a href="#services" onClick={() => scrollToSection('achievements')} className="block py-2 hover:text-primary transition-colors">Our Achivements</a>
+                            <HashLink to="/#achievements" smooth className="block py-2 hover:text-primary transition-colors">Our Achievements</HashLink>
                         </li>
                         <li>
-                            <a href="#about" onClick={() => scrollToSection('about')} className="block py-2 hover:text-primary transition-colors">About Us</a>
+                            <HashLink to="/#about" smooth className="block py-2 hover:text-primary transition-colors">About Us</HashLink>
                         </li>
                         <li>
-                            <a href="#contact" onClick={() => scrollToSection('contact')} className="block py-2 hover:text-primary transition-colors">Contact Us</a>
+                            <HashLink to="/#contact" smooth className="block py-2 hover:text-primary transition-colors">Contact Us</HashLink>
                         </li>
                         <li className="pt-2">
                             <button 

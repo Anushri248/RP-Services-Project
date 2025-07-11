@@ -15,6 +15,7 @@ import BookServiceForm from '../BookServiceForm/BookServiceForm';
 // import BookServiceForm from '../BookServiceForm/BookServiceForm'; // To be created
 import {motion} from "framer-motion";
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 const coreServices = [
   {
     id: 'air-import-export',
@@ -97,15 +98,27 @@ const OurServices = ({ setShowBookServiceModal }) => {
         <h2 className='text-2xl font-semibold mb-4'></h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {coreServices.slice(0, 3).map((service, idx) => (
-            <ServiceCardImage key={service.id} {...service} animationDelay={0.1 * idx} />
+            <Link
+              key={service.id}
+              to={`/services/${service.id}`}
+              className="block group focus:outline-none focus:ring-2 focus:ring-primary rounded-2xl transition-shadow hover:shadow-2xl active:scale-[0.98]"
+              tabIndex={0}
+            >
+              <ServiceCardImage {...service} animationDelay={0.1 * idx} />
+            </Link>
           ))}
         </div>
         {/* Responsive: stacked on small, centered row on md+ */}
         <div className="grid grid-cols-1 gap-8 mb-12 md:flex md:justify-center">
           {coreServices.slice(3).map((service, idx) => (
-            <div key={service.id} className="w-full max-w-sm">
+            <Link
+              key={service.id}
+              to={`/services/${service.id}`}
+              className="w-full max-w-sm block group focus:outline-none focus:ring-2 focus:ring-primary rounded-2xl transition-shadow hover:shadow-2xl active:scale-[0.98]"
+              tabIndex={0}
+            >
               <ServiceCardImage {...service} animationDelay={0.1 * (idx + 3)} />
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -157,7 +170,14 @@ const OurServices = ({ setShowBookServiceModal }) => {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {supportServices.map((service, idx) => (
-            <ServiceCardIcon key={service.id} {...service} animationDelay={0.1 * idx} />
+            <Link
+              key={service.id}
+              to={`/services/${service.id}`}
+              className="block group focus:outline-none focus:ring-2 focus:ring-primary rounded-2xl transition-shadow hover:shadow-2xl active:scale-[0.98]"
+              tabIndex={0}
+            >
+              <ServiceCardIcon {...service} animationDelay={0.1 * idx} />
+            </Link>
           ))}
         </div>
       

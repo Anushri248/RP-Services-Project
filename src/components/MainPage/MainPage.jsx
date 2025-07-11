@@ -64,13 +64,17 @@ const MainPage = () => {
   };
 
   const scrollToServices = () => {
-    const servicesSection = document.getElementById('services');
+    const servicesSection = document.getElementById('book-service-modal');
     servicesSection.scrollIntoView({ behavior: 'smooth' });
   };
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     contactSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const openBookServiceModal = () => {
+    window.dispatchEvent(new Event('openBookServiceModal'));
   };
 
   return (
@@ -102,7 +106,7 @@ const MainPage = () => {
               whileInView="animate" 
               initial="initial" className='flex flex-wrap gap-4 justify-center md:justify-start md:ml-16'>
               <button 
-                onClick={scrollToContact}
+                onClick={openBookServiceModal}
                 className="bg-white text-primary px-8 
                 py-4 rounded-full font-medium hover:shadow-xl transition-all duration-300 group">
                 Book Service
@@ -111,7 +115,7 @@ const MainPage = () => {
                 </span>
               </button>
               <button 
-                onClick={scrollToServices}
+                onClick={scrollToContact}
                 className="bg-white/10 backdrop-blur-sm text-white px-8 
                 py-4 rounded-full font-medium hover:bg-white/20 transition-all duration-300 border border-white/10">
                 Contact Us
