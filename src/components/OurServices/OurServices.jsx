@@ -1,15 +1,15 @@
 import React from 'react';
 import ServiceCardImage from './CardComp';
 import ServiceCardIcon from './ServiceCardIcon';
-import Img1 from "../../assests/Uses/1.png";
-import Img2 from "../../assests/Uses/2.png";
-import Img3 from "../../assests/Uses/3.png";
-import Img4 from "../../assests/Uses/license.png";
-import Img5 from "../../assests/Uses/insurance-img.png";
-import Icon1 from '../../assests/Icon1.png';
-import Icon2 from '../../assests/Icon2.png';
-import Icon3 from '../../assests/Icon3.png';
-import contactImg from '../../assests/contact-us.png';
+import Img1 from "../../assets/Uses/1.png";
+import Img2 from "../../assets/Uses/2.png";
+import Img3 from "../../assets/Uses/3.png";
+import Img4 from "../../assets/Uses/license.png";
+import Img5 from "../../assets/Uses/insurance-img.png";
+import Icon1 from '../../assets/Icon1.png';
+import Icon2 from '../../assets/Icon2.png';
+import Icon3 from '../../assets/Icon3.png';
+import contactImg from '../../assets/contact-us.png';
 import BookServiceForm from '../BookServiceForm/BookServiceForm';
 
 // import BookServiceForm from '../BookServiceForm/BookServiceForm'; // To be created

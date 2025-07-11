@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import BookServiceForm from '../BookServiceForm/BookServiceForm';
-import Icon1 from '../../assests/Icon1.png';
-import Icon2 from '../../assests/Icon2.png';
-import Icon3 from '../../assests/Icon3.png';
-import contactImg from '../../assests/contact-us.png';
+import Icon1 from '../../assets/Icon1.png';
+import Icon2 from '../../assets/Icon2.png';
+import Icon3 from '../../assets/Icon3.png';
+import contactImg from '../../assets/contact-us.png';
 
 // Add more images for demonstration (replace with real ones as needed)
 const placeholderImages = [Icon1, Icon2, Icon3, contactImg];

@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { SlideRight } from '../Utility/animation';
-import HeroImage1 from "../../assests/services-images/img1.jpg";
-import HeroImage2 from "../../assests/services-images/furnece.jpg";
-import HeroImage3 from "../../assests/services-images/img3.jpg";
-import HeroImage4 from "../../assests/services-images/img4.jpg";
+import HeroImage1 from "../../assets/services-images/img1.jpg";
+import HeroImage2 from "../../assets/services-images/furnece.jpg";
+import HeroImage3 from "../../assets/services-images/img3.jpg";
+import HeroImage4 from "../../assets/services-images/img4.jpg";
 
 const latestServices = [
   {

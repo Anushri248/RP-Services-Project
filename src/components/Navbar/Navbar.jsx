@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 import { motion } from "framer-motion";
 import { SlideDown } from '../Utility/animation';
-import logo from '../../assests/logo.png';
+import logo from '../../assets/logo.png';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

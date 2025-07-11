@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "framer-motion": "^12.23.3",
-    "my-react-app": "file:",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ContactImage from '../../assests/contact-us.png';
+import ContactImage from '../../assets/contact-us.png';
 import Swal from 'sweetalert2';
 import './ContactUs.css';
 import {motion} from "framer-motion";

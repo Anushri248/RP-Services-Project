@@ -1,7 +1,7 @@
 import React from 'react';
-import Img1 from "../../assests/Uses/1.png";
-import Img2 from "../../assests/Uses/2.png";
-import Img3 from "../../assests/Uses/3.png";
+import Img1 from "../../assets/Uses/1.png";
+import Img2 from "../../assets/Uses/2.png";
+import Img3 from "../../assets/Uses/3.png";
 import {motion} from "framer-motion";
 
 import { SlideLeft } from '../Utility/animation';

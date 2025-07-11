@@ -1,6 +1,6 @@
 import React from 'react'
-import Image1 from '../../assests/about1.png';
-import Image2 from'../../assests/about2.png';
+import Image1 from '../../assets/about1.png';
+import Image2 from'../../assets/about2.png';
 
 import {motion} from "framer-motion";
 import { SlideUp } from '../Utility/animation';
