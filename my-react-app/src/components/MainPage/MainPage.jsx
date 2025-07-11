@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 // Import service images
-import HeroImage1 from "../../assests/services-images/img1.jpg";
-import HeroImage2 from "../../assests/services-images/furnece.jpg";
-import HeroImage3 from "../../assests/services-images/img3.jpg";
-import HeroImage4 from "../../assests/services-images/img4.jpg";
-import HeroImage5 from "../../assests/services-images/img5.jpg";
-import HeroImage6 from "../../assests/services-images/img6.jpg";
+import HeroImage1 from "../../assets/services-images/img1.jpg";
+import HeroImage2 from "../../assets/services-images/furnece.jpg";
+import HeroImage3 from "../../assets/services-images/img3.jpg";
+import HeroImage4 from "../../assets/services-images/img4.jpg";
+import HeroImage5 from "../../assets/services-images/img5.jpg";
+import HeroImage6 from "../../assets/services-images/img6.jpg";
 
 import { SlideUp } from '../Utility/animation';
 import {motion} from "framer-motion";
