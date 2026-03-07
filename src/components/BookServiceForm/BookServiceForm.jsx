@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Swal from 'sweetalert2';
 
 const WEB3FORMS_ACCESS_KEY = 'd0c8a8c2-7c76-4cb7-8682-2b6f3353648c';
 
@@ -75,9 +77,22 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
     });
 
     if (response.ok) {
-      setStatus('success');
+      // Show success message with SweetAlert2
+      Swal.fire({
+        title: "Thank you!",
+        text: "Your service request has been submitted successfully",
+        icon: "success",
+        confirmButtonColor: "#667eea",
+        confirmButtonText: "OK"
+      });
+      
+      // Clear the form
       setForm({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
+      setStatus('idle');
+      
+      // Close the modal after successful submission
+      handleClose();
     } else {
       setStatus('error');
     }
@@ -91,35 +106,68 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
   };
 
   return (
-    <div
-      id="book-service-modal"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
-    >
-      <div className="w-full max-w-sm sm:max-w-md md:max-w-xl relative p-1 sm:p-2 md:p-4">
-        <form
-          onSubmit={handleSubmit}
-          className="relative w-full backdrop-blur-2xl bg-white/10 p-6 sm:p-8 rounded-3xl border-2 border-gray-400/20 shadow-2xl hover:shadow-gray-400/10 transition-all duration-500 overflow-hidden"
-          style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.10)' }}
-          noValidate
+    <AnimatePresence>
+      <motion.div
+        id="book-service-modal"
+        className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <motion.div 
+          className="w-11/12 max-w-sm sm:max-w-md md:max-w-xl relative"
+          initial={{ y: -100, opacity: 0, scale: 0.8 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: -100, opacity: 0, scale: 0.8 }}
+          transition={{ 
+            type: "spring", 
+            damping: 25, 
+            stiffness: 300,
+            duration: 0.5 
+          }}
         >
-          {/* Close Button (top-right, circular, black/grey theme, flush to margin) */}
-          <button
-            type="button"
-            onClick={handleClose}
-            aria-label="Close"
-            className="absolute top-0.5 right-3 w-8 aspect-square flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 hover:text-black shadow-md transition-all duration-200 z-10 border border-gray-300 p-0"
-            style={{ fontSize: '1.5rem', fontWeight: 'bold' }}
+          <form
+            onSubmit={handleSubmit}
+            className="relative w-full backdrop-blur-2xl bg-white/10 p-6 sm:p-8 rounded-3xl border-2 border-gray-400/20 shadow-2xl hover:shadow-gray-400/10 transition-all duration-500 overflow-hidden"
+            style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.10)' }}
+            noValidate
           >
-            &times;
-          </button>
+            {/* Close Button (top-right, circular, black/grey theme, flush to margin) */}
+            <button
+              type="button"
+              onClick={handleClose}
+              aria-label="Close"
+              className="absolute top-0.5 right-3 w-8 mb-5 aspect-square flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 hover:text-black shadow-md transition-all duration-200 z-10 border border-gray-300 p-0"
+              style={{ fontSize: '1.5rem', fontWeight: 'bold' }}
+            >
+              &times;
+            </button>
 
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center text-white drop-shadow-lg flex items-center justify-center gap-4">
-            Book a Service
-          </h2>
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold mb-6 text-center text-white drop-shadow-lg flex items-center justify-center gap-4"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              Book a Service
+            </motion.h2>
         {status === 'success' ? (
-          <div className="text-green-500 text-center font-semibold py-4">Thank you! Your enquiry has been submitted.</div>
+          <motion.div 
+            className="text-green-500 text-center font-semibold py-4"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            Thank you! Your enquiry has been submitted.
+          </motion.div>
         ) : (
-          <div className="space-y-4">
+          <motion.div 
+            className="space-y-4"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
             <div className="space-y-2">
                 <label className="text-white/90 text-sm font-medium pl-1">
                   Name<span className="text-red-400">*</span>
@@ -201,22 +249,32 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
               ></textarea>
             </div>
 
-            <button
+            <motion.button
               type="submit"
               disabled={status === 'submitting'}
-              className="w-full bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-700 mt-4 text-white font-semibold px-6 py-3 rounded-xl transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-400/30 active:translate-y-0 transition-all duration-300 shadow-md"
+              className="w-full bg-gradient-to-r from-purple-400 via-indigo-400 to-purple-700 mt-4 text-white font-semibold px-6 py-3 rounded-xl transform hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-400/30 active:translate-y-0 transition-all duration-300 shadow-md hover:bg-white hover:text-black"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               {status === 'submitting' ? 'Submitting...' : 'Send Request'}
-            </button>
+            </motion.button>
 
               {status === 'error' && (
-                <div className="text-red-500 text-center font-semibold py-2">Something went wrong. Please try again.</div>
+                <motion.div 
+                  className="text-red-500 text-center font-semibold py-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Something went wrong. Please try again.
+                </motion.div>
               )}
-          </div>
+          </motion.div>
         )}
       </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+    </AnimatePresence>
   );
 };
 

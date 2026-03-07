@@ -45,6 +45,9 @@ const serviceCarousel = [
 
 const MainPage = () => {
   const [currentImage, setCurrentImage] = useState(0);
+  // Touch state for swipe
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
   // Auto-advance carousel
   useEffect(() => {
@@ -61,6 +64,30 @@ const MainPage = () => {
 
   const prevImage = () => {
     setCurrentImage((prev) => (prev - 1 + serviceCarousel.length) % serviceCarousel.length);
+  };
+
+  // Touch event handlers
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX !== null && touchEndX !== null) {
+      const distance = touchStartX - touchEndX;
+      if (distance > 50) {
+        // Swiped left
+        nextImage();
+      } else if (distance < -50) {
+        // Swiped right
+        prevImage();
+      }
+    }
+    setTouchStartX(null);
+    setTouchEndX(null);
   };
 
   const scrollToServices = () => {
@@ -126,11 +153,16 @@ const MainPage = () => {
 
         {/* Image Carousel Section */}
         <motion.div initial={{opacity:0, scale:0.5}} whileInView={{opacity:1, scale:1}} className="flex items-center justify-center p-4">
-          <div className='relative w-full max-w-2xl'>
+          <div className='relative w-full max-w-4xl'>
             {/* Carousel Container */}
-            <div className='relative bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl'>
+            <div 
+              className='relative bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl'
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {/* Image */}
-              <div className='relative h-96 overflow-hidden'>
+              <div className='relative h-[25rem] overflow-hidden'>
                 <img 
                   src={serviceCarousel[currentImage].image} 
                   alt={serviceCarousel[currentImage].title}

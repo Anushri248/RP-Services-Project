@@ -1,81 +1,89 @@
-import React from 'react';
-import ServiceCardImage from './CardComp';
-import ServiceCardIcon from './ServiceCardIcon';
+import React from "react";
+import ServiceCardImage from "./CardComp";
+import ServiceCardIcon from "./ServiceCardIcon";
 import Img1 from "../../assets/Uses/1.png";
 import Img2 from "../../assets/Uses/2.png";
 import Img3 from "../../assets/Uses/3.png";
 import Img4 from "../../assets/Uses/license.png";
 import Img5 from "../../assets/Uses/insurance-img.png";
-import Icon1 from '../../assets/Icon1.png';
-import Icon2 from '../../assets/Icon2.png';
-import Icon3 from '../../assets/Icon3.png';
-import contactImg from '../../assets/contact-us.png';
-import BookServiceForm from '../BookServiceForm/BookServiceForm';
+import Icon1 from "../../assets/Icon1.png";
+import Icon2 from "../../assets/Icon2.png";
+import Icon3 from "../../assets/Icon3.png";
+import bookServiceImg from "../../assets/book_service_img1.png";
+import BookServiceForm from "../BookServiceForm/BookServiceForm";
 
 // import BookServiceForm from '../BookServiceForm/BookServiceForm'; // To be created
-import {motion} from "framer-motion";
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 const coreServices = [
   {
-    id: 'air-import-export',
+    id: "air-import-export",
     image: Img1,
-    heading: 'Air Import & Export Door-to-Door Service',
-    description: 'Fast and reliable air freight solutions for your import and export needs, including customs clearance and delivery.'
+    heading: "Air Import & Export Door-to-Door Service",
+    description:
+      "Fast and reliable air freight solutions for your import and export needs, including customs clearance and delivery.",
   },
   {
-    id: 'sea-lcl-fcl',
+    id: "sea-lcl-fcl",
     image: Img2,
-    heading: 'SEA LCL/FCL Import & Export Door-to-Door Service',
-    description: 'Comprehensive sea freight services for both LCL and FCL shipments, ensuring smooth global trade.'
+    heading: "SEA LCL/FCL Import & Export Door-to-Door Service",
+    description:
+      "Comprehensive sea freight services for both LCL and FCL shipments, ensuring smooth global trade.",
   },
   {
-    id: 'cha-activities',
+    id: "cha-activities",
     image: Img3,
-    heading: 'CHA Activities (All custom-related work)',
-    description: 'Expert handling of all customs-related activities and documentation for hassle-free logistics.'
+    heading: "CHA Activities (All custom-related work)",
+    description:
+      "Expert handling of all customs-related activities and documentation for hassle-free logistics.",
   },
   {
-    id: 'export-licenses',
+    id: "export-licenses",
     image: Img4,
-    heading: 'Export Related All Licences Registration',
-    description: 'Assistance with registration and management of all export-related licenses and compliance.'
+    heading: "Export Related All Licences Registration",
+    description:
+      "Assistance with registration and management of all export-related licenses and compliance.",
   },
   {
-    id: 'insurance',
+    id: "insurance",
     image: Img5,
-    heading: 'General Insurance / Marine Insurance',
-    description: 'Protect your shipments with our general and marine insurance solutions.'
+    heading: "General Insurance / Marine Insurance",
+    description:
+      "Protect your shipments with our general and marine insurance solutions.",
   },
   // Book Service Now card placeholder (will be rendered separately)
 ];
 
 const supportServices = [
   {
-    id: 'support-new-exporters',
+    id: "support-new-exporters",
     image: Icon1,
-    heading: 'Support for New Exporters and Importers',
-    description: 'Guidance and support for businesses new to international trade.'
+    heading: "Support for New Exporters and Importers",
+    description:
+      "Guidance and support for businesses new to international trade.",
   },
   {
-    id: 'merchant-support',
+    id: "merchant-support",
     image: Icon2,
-    heading: 'Merchant Exporter and Importer support with Our IEC',
-    description: 'Leverage our IEC for seamless merchant export and import operations.'
+    heading: "Merchant Exporter and Importer support with Our IEC",
+    description:
+      "Leverage our IEC for seamless merchant export and import operations.",
   },
   {
-    id: 'logistics-training',
+    id: "logistics-training",
     image: Icon3,
-    heading: 'Logistics Employee Training & Placement Service',
-    description: 'Professional training and placement services for logistics employees.'
+    heading: "Logistics Employee Training & Placement Service",
+    description:
+      "Professional training and placement services for logistics employees.",
   },
 ];
 
 const OurServices = ({ setShowBookServiceModal }) => {
   const scrollToSection = (sectionId) => {
-    console.log('Scrolling to:', sectionId);
+    console.log("Scrolling to:", sectionId);
     const section = document.getElementById(sectionId);
-    console.log('Found section:', section);
+    console.log("Found section:", section);
 
     if (section) {
       const offset = 80;
@@ -84,18 +92,18 @@ const OurServices = ({ setShowBookServiceModal }) => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
 
   return (
-    <section id="services" className='py-20 bg-white w-full'>
-      <div className='w-full px-4 md:px-8 max-w-7xl mx-auto'>
-        <h1 className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text mb-8 text-center w-full'>
+    <section id="services" className="py-20 bg-white w-full">
+      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto">
+        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text mb-8 text-center w-full">
           Core Import & Export Services
         </h1>
-        <h2 className='text-2xl font-semibold mb-4'></h2>
+        <h2 className="text-2xl font-semibold mb-4"></h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {coreServices.slice(0, 3).map((service, idx) => (
             <Link
@@ -123,11 +131,10 @@ const OurServices = ({ setShowBookServiceModal }) => {
         </div>
 
         {/* Book Your Service Now Horizontal Card */}
-        <div className="flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-[#667eea] to-[#764ba2] border border-white/20 shadow-2xl rounded-2xl p-8 mb-16 max-w-6xl mx-auto backdrop-blur-xl">
-          <img src={contactImg} alt="Book Service" className="w-40 h-40 object-contain rounded-2xl mb-6 md:mb-0 md:mr-8" />
+        {/* <div className="flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-[#667eea] to-[#764ba2] border border-white/20 shadow-2xl rounded-2xl p-8 mb-16 max-w-6xl mx-auto backdrop-blur-xl">
+          <img src={bookServiceImg} alt="Book Service" className="w-60 h-60 object-contain rounded-2xl mb-6 md:mb-0 md:mr-8" />
           <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
             <h3 className="text-2xl font-bold text-white mb-2">Book Your Service Now</h3>
-            <p className="text-white/90 mb-4">Ready to start your global trade journey? Book your service with us today!</p>
             <button
               onClick={() => setShowBookServiceModal && setShowBookServiceModal(true)}
               className="bg-white text-[#764ba2] px-8 py-3 rounded-full hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 font-semibold hover:bg-gray-50"
@@ -135,8 +142,33 @@ const OurServices = ({ setShowBookServiceModal }) => {
               Book Now
             </button>
           </div>
+        </div> */}
+        <div
+          className="relative flex flex-col items-center justify-center 
+  bg-cover bg-center rounded-2xl shadow-2xl mb-16 max-w-6xl mx-auto
+  min-h-[350px] md:min-h-[420px] p-10"
+          style={{ backgroundImage: `url(${bookServiceImg})` }}
+        >
+          {/* Dark overlay for readability */}
+          <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
+
+          {/* Content */}
+          <div className="relative text-center">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Book Your Service Now
+            </h3>
+
+            <button
+              onClick={() =>
+                setShowBookServiceModal && setShowBookServiceModal(true)
+              }
+              className="bg-white text-[#764ba2] px-8 py-3 rounded-full hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 font-semibold"
+            >
+              Book Now
+            </button>
+          </div>
         </div>
-        
+
         {/* Book Service Button */}
         {/* <div className="text-center mb-16">
           <motion.div
@@ -165,7 +197,7 @@ const OurServices = ({ setShowBookServiceModal }) => {
           <p className="text-gray-600 mt-4 text-sm">Ready to start your global trade journey? Let's make it happen!</p>
         </div> */}
 
-        <h1 className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text mb-8 text-center w-full'>
+        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text mb-8 text-center w-full">
           Support & Value-Added Services
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
@@ -180,7 +212,6 @@ const OurServices = ({ setShowBookServiceModal }) => {
             </Link>
           ))}
         </div>
-      
       </div>
     </section>
   );

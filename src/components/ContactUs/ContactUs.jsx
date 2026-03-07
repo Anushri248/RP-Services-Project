@@ -63,6 +63,23 @@ const ContactUs = () => {
     <section id="contact" className='relative bg-gradient-primary overflow-hidden py-20 w-full'>
       <div className='absolute inset-0 bg-[url("/grid.svg")] opacity-10'></div>
       <div className='w-full px-4 md:px-8'>
+        {/* Mobile Image - Above Heading */}
+        <motion.div 
+          variants={SlideUp(0.2)} 
+          whileInView="animate" 
+          initial="initial" 
+          className="md:hidden text-center mb-8"
+        >
+          <div className='relative inline-block'>
+            <div className='absolute inset-0 bg-gradient-to-r from-secondary/30 to-primary/30 rounded-2xl blur-2xl'></div>
+            <img 
+              src={ContactImage} 
+              alt="Contact Us Illustration" 
+              className='relative w-48 h-48 object-contain transform hover:scale-105 transition-transform duration-500'
+            />
+          </div>
+        </motion.div>
+
         <div className="text-center mb-12">
           <motion.h2 
             variants={SlideUp(0.4)} 

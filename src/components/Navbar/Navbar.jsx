@@ -23,6 +23,11 @@ const Navbar = () => {
 
     const handleBookServiceClick = () => {
         window.dispatchEvent(new Event('openBookServiceModal'));
+        setIsMenuOpen(false); // Close mobile menu when clicking Book Service
+    };
+
+    const handleNavLinkClick = () => {
+        setIsMenuOpen(false); // Close mobile menu when clicking any navigation link
     };
 
     return (
@@ -32,9 +37,9 @@ const Navbar = () => {
             whileInView="animate" 
             className='sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-white/10 w-full'
         >
-            <div className="w-full max-w-7xl mx-auto  md:px-8 flex items-center justify-between">
-                <div className="flex ">
-                    <HashLink to="/#home" smooth className="cursor-pointer">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
+                <div className="flex">
+                    <HashLink to="/#home" smooth className="cursor-pointer" onClick={handleNavLinkClick}>
                         <img 
                             src={logo} 
                             alt="RP Services Logo" 
@@ -85,19 +90,19 @@ const Navbar = () => {
                 >
                     <ul className="w-full max-w-7xl mx-auto py-4 px-4 flex flex-col gap-4">
                         <li>
-                            <HashLink to="/#home" smooth className="block py-2 hover:text-primary transition-colors">Home</HashLink>
+                            <HashLink to="/#home" smooth className="block py-2 hover:text-primary transition-colors" onClick={handleNavLinkClick}>Home</HashLink>
                         </li>
                         <li>
-                            <HashLink to="/#services" smooth className="block py-2 hover:text-primary transition-colors">Our Services</HashLink>
+                            <HashLink to="/#services" smooth className="block py-2 hover:text-primary transition-colors" onClick={handleNavLinkClick}>Our Services</HashLink>
                         </li>
                         <li>
-                            <HashLink to="/#achievements" smooth className="block py-2 hover:text-primary transition-colors">Our Achievements</HashLink>
+                            <HashLink to="/#achievements" smooth className="block py-2 hover:text-primary transition-colors" onClick={handleNavLinkClick}>Our Achievements</HashLink>
                         </li>
                         <li>
-                            <HashLink to="/#about" smooth className="block py-2 hover:text-primary transition-colors">About Us</HashLink>
+                            <HashLink to="/#about" smooth className="block py-2 hover:text-primary transition-colors" onClick={handleNavLinkClick}>About Us</HashLink>
                         </li>
                         <li>
-                            <HashLink to="/#contact" smooth className="block py-2 hover:text-primary transition-colors">Contact Us</HashLink>
+                            <HashLink to="/#contact" smooth className="block py-2 hover:text-primary transition-colors" onClick={handleNavLinkClick}>Contact Us</HashLink>
                         </li>
                         <li className="pt-2">
                             <button 
