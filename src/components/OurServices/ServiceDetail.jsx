@@ -5,54 +5,84 @@ import Icon1 from "../../assets/Icon1.png";
 import Icon2 from "../../assets/Icon2.png";
 import Icon3 from "../../assets/Icon3.png";
 import contactImg from "../../assets/contact-us.png";
-
+import air1 from "../../assets/air1.jpeg";
+import air2 from "../../assets/air2.jpeg";
+import air3 from "../../assets/air3.jpeg";
+import air4 from "../../assets/air4.jpeg";
+import sea1 from "../../assets/sea1.jpg";
+import sea2 from "../../assets/sea2.jpg";
+import sea3 from "../../assets/sea3.jpg";
+import support1 from "../../assets/support1.jpg";
+import support2 from "../../assets/support2.jpg";
+import support3 from "../../assets/support3.jpg";
+import insuranceImg from "../../assets/general_insurance.jpg";
+import Breakbulk1 from "../../assets/project_img/breakbulk/img1.jpeg";
+import Breakbulk2 from "../../assets/project_img/breakbulk/img2.jpeg";
+import Breakbulk3 from "../../assets/project_img/breakbulk/img3.jpeg";
+import Breakbulk4 from "../../assets/project_img/breakbulk/img4.jpeg";
+import Breakbulk5 from "../../assets/project_img/breakbulk/img5.jpeg";
+import Breakbulk6 from "../../assets/project_img/breakbulk/img6_hiddennames.png";
+import licenseRegister from "../../assets/license_registration.png";
+import traningImg from "../../assets/traning.png";
 // Add more images for demonstration (replace with real ones as needed)
 const placeholderImages = [Icon1, Icon2, Icon3, contactImg];
 
 const serviceDetails = {
   "air-import-export": {
     heading: "Air Import & Export Door-to-Door Service",
-    images: [Icon1, Icon2, contactImg],
-    description:
-      "Fast and reliable air freight solutions for your import and export needs, including customs clearance and delivery.",
-    details:
-      "We offer comprehensive air freight services, including pickup, customs clearance, and last-mile delivery. Our team ensures your goods move quickly and safely across borders.",
+    images: [air1,air2,air3,air4],
+  description:
+"Our air freight services provide fast, secure, and reliable transportation for your import and export needs. With a strong logistics network, we ensure smooth cargo movement across major global destinations.",
+
+details:
+"Air freight is the quickest and safest way to ship time-sensitive or high-value goods worldwide. We offer complete door-to-door solutions, including pickup, customs clearance, air transportation, and final delivery.",
+
+details2:
+"Our experienced team ensures your cargo moves smoothly across borders while meeting all compliance requirements, providing a seamless and stress-free shipping experience.",
   },
   "sea-lcl-fcl": {
     heading: "SEA LCL/FCL Import & Export Door-to-Door Service",
-    images: [Icon2, Icon1, contactImg],
+    images: [sea1,sea2,sea3],
     description:
-      "Comprehensive sea freight services for both LCL and FCL shipments, ensuring smooth global trade.",
+      "Our sea freight services offer a reliable and cost-effective solution for transporting goods across international markets. With a strong global network, we ensure smooth cargo movement between major ports worldwide.",
     details:
-      "Our sea freight solutions cover both Less than Container Load (LCL) and Full Container Load (FCL) shipments. We manage documentation, customs, and delivery.",
+    "We handle both FCL and LCL shipments, providing flexible options based on your cargo size and shipping requirements. Our team manages the shipping process with careful planning and coordination.",
+    details2: 
+    "From shipment booking to documentation and customs support, we ensure your cargo is handled professionally, delivering efficient and dependable ocean freight solutions for your import and export needs."
   },
   "cha-activities": {
-    heading: "CHA Activities (All custom-related work)",
-    images: [Icon3, Icon1, contactImg],
+    heading: "Specialized Breakbulk & Hazardous Cargo Services",
+    images: [Breakbulk1,Breakbulk2,Breakbulk3,Breakbulk4,Breakbulk5,Breakbulk6],
     description:
-      "Expert handling of all customs-related activities and documentation for hassle-free logistics.",
+    "We specialize in handling breakbulk and hazardous cargo, ensuring safe and efficient transportation of goods that require special care. Our team manages complex shipments that cannot be transported in standard containers, providing reliable solutions for oversized, heavy, or sensitive cargo.",
     details:
-      "Our CHA team handles all customs clearance, documentation, and compliance, ensuring your shipments move without delay.",
+    "With strong industry expertise, we ensure that hazardous materials are handled according to safety regulations and international shipping standards. From documentation to coordination with carriers and ports, we make sure every shipment is managed with precision and responsibility.",
+    details2:
+    "Our specialized services are designed to meet the unique needs of breakbulk and hazardous cargo, ensuring that your cargo reaches its destination safely and efficiently."
   },
   "export-licenses": {
     heading: "Export Related All Licences Registration",
-    images: [contactImg, Icon1, Icon2],
+    images: [licenseRegister],
     description:
-      "Assistance with registration and management of all export-related licenses and compliance.",
+      "Starting an export business requires proper registrations and approvals. We assist businesses in obtaining the necessary export licenses and documentation to ensure smooth and compliant international trade operations.",
     details:
-      "We help you register and manage all necessary export licenses, keeping you compliant with regulations.",
+    "Our team helps with essential registrations such as the Import Export Code (IEC) issued by DGFT, which is mandatory for exporters, along with Authorized Dealer (AD) Code registration with customs and ICEGATE registration for filing shipping bills and managing export documentation.",
+    details2:
+    "Depending on the type of goods, additional certifications may be required, such as FSSAI for food products, Phytosanitary Certificate for agricultural goods, Drug License for pharmaceutical products, WPC Approval for telecom equipment, Textile Committee Certificate, SCOMET License, and Certificate of Origin issued by Chambers of Commerce. We guide you through the entire process to ensure hassle-free export compliance."
   },
   insurance: {
     heading: "General Insurance / Marine Insurance",
-    images: [contactImg, Icon2, Icon3],
+    images: [insuranceImg],
     description:
-      "Protect your shipments with our general and marine insurance solutions.",
-    details:
-      "Our insurance services cover your goods against loss or damage during transit, giving you peace of mind.",
-  },
+    "We provide reliable Marine Insurance services to protect your cargo and shipments during transportation. Our solutions are designed for importers, exporters, and logistics businesses to safeguard goods against risks that may occur during transit.",
+      details:
+    "Our services include Marine Cargo Insurance for goods in transit and Marine Hull Insurance for vessels, along with flexible policy options such as Single Transit Policies and Open Policies for multiple shipments. These policies cover risks like damage, loss, fire, collision, theft, and natural disasters.",
+    details2:
+      "With our support, businesses can ensure secure shipments, reduced financial risk, and smooth international trade operations. We help you choose the right insurance coverage so your cargo remains protected throughout the entire transportation process."
+      },
   "support-new-exporters": {
     heading: "Support for New Exporters and Importers",
-    images: [Icon1, contactImg, Icon3],
+    images: [support1, support3],
     description:
       "Guidance and support for businesses new to international trade.",
     details:
@@ -60,7 +90,7 @@ const serviceDetails = {
   },
   "merchant-support": {
     heading: "Merchant Exporter and Importer support with Our IEC",
-    images: [Icon2, contactImg, Icon1],
+    images: [support2],
     description:
       "Leverage our IEC for seamless merchant export and import operations.",
     details:
@@ -68,7 +98,7 @@ const serviceDetails = {
   },
   "logistics-training": {
     heading: "Logistics Employee Training & Placement Service",
-    images: [Icon3, contactImg, Icon2],
+    images: [traningImg],
     description:
       "Professional training and placement services for logistics employees.",
     details:
@@ -103,9 +133,14 @@ const ServiceDetail = () => {
     setCurrent((current - 1 + images.length) % images.length);
 
   return (
-    <div className="max-w-6xl mx-auto py-16 px-4">
+    <div className="max-w-6xl mx-auto py-10 px-4">
       <Link
-        to="/services"
+        to="/#services"   onClick={() => {
+    setTimeout(() => {
+      const el = document.getElementById("services");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }}
         className="text-5xl px-6 rounded-full text-center  bg-gray-200 text-primary hover:-translate-x-1 transition-transform duration-200 inline-block mb-6"
       > <p className="mb-3 font-extrabold ">←</p>
       </Link>
@@ -124,13 +159,13 @@ const ServiceDetail = () => {
                   onClick={prevImage}
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow hover:bg-white"
                 >
-                  <span className="text-xl">&#8592;</span>
+                  <span className="text-xl">&lt;</span>
                 </button>
                 <button
                   onClick={nextImage}
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow hover:bg-white"
                 >
-                  <span className="text-xl">&#8594;</span>
+                  <span className="text-xl">&gt;</span>
                 </button>
               </>
             )}
@@ -156,6 +191,7 @@ const ServiceDetail = () => {
           </h1>
           <p className="text-gray-600 text-lg mb-4">{service.description}</p>
           <div className="text-gray-700 mb-4">{service.details}</div>
+                    <div className="text-gray-700 mb-4">{service.details2}</div>
            <div className="flex justify-center mt-8">
         <button
           onClick={() => setShowBookServiceModal(true)}

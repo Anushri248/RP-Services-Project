@@ -21,7 +21,10 @@ const ServiceCardIcon = ({ id, image, heading, description, animationDelay = 0 }
       <h4 className='mb-4 text-xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text text-center'>{heading}</h4>
       <p className='text-gray-600 text-sm leading-relaxed text-center mb-4'>{description}</p>
       <button
-        onClick={() => navigate(`/services/${id}`)}
+            onClick={() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            navigate(`/services/${id}`);
+          }}
         className='bg-gradient-to-r from-secondary to-primary text-white px-6 py-2 rounded-full hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 mt-auto'
       >
         Explore More

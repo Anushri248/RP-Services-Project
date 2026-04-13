@@ -1,57 +1,128 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { SlideRight } from '../Utility/animation';
+import { SlideRight } from "../Utility/animation";
 import HeroImage1 from "../../assets/services-images/img1.jpg";
-import HeroImage2 from "../../assets/services-images/furnece.jpg";
+import HeroImage2 from "../../assets/services-images/air2.jpeg";
 import HeroImage3 from "../../assets/services-images/img3.jpg";
 import HeroImage4 from "../../assets/services-images/img4.jpg";
+import UsImage1 from "../../assets/project_img/us/img1.png";
+import UsImage2 from "../../assets/project_img/us/img2.jpeg";
+import UsImage3 from "../../assets/project_img/us/img3.jpeg";
+import UsImage4 from "../../assets/project_img/us/img4.jpeg";
 
 const latestServices = [
   {
     id: 1,
-    image: HeroImage1,
-    title: "Recently Shipped Cargo to USA from India",
-    description: "Successfully delivered a full container load of textiles and garments from Mumbai to New York. The shipment included premium cotton fabrics, ready-made garments, and traditional Indian textiles valued at $150,000. Our team handled all customs clearance, documentation, and door-to-door delivery within the promised timeline.",
-    date: "April 2025",
+    images: [UsImage1, UsImage2, UsImage3, UsImage4],
+    title: "Recently Shipped Breakbulk Cargo to USA from India",
+    description:
+      "Successfully delivered 85 MT Cargo multi container load like Break Bulk , Flat Track  & High cube containers of Heavy Machineries from Pune  to South Carolina, USA . The shipment included Tower type melting furnace(3.0 ton/Hr.) NG with KROMSCHROEDER Combustion system  (Tilt type melting furnace)  valued at $4,60,000. Our team handled all customs clearance, documentation, and door-to-door delivery within the promised timeline.",
     category: "Sea Freight",
-    destination: "Mumbai → New York"
+    destination: "Pune,India → South Carolina,USA",
   },
   {
     id: 2,
-    image: HeroImage2,
-    title: "Air Freight Delivery to Benglore",
-    description: "Expedited air freight service for automotive parts from Pune to Benglore. Delivered critical components for a German automotive manufacturer within 48 hours. The shipment included precision-engineered parts, electronic components, and specialized machinery parts worth €200,000.",
-    date: "November 2024",
+    images: [HeroImage2],
+    title: "International Air Freight Services",
+    description:
+"We provide expedited air freight services for automotive, engineering, pharmaceutical, and hazardous cargo from India to global destinations, and from China, the USA, Europe, and the Gulf to India. Our team ensures fast, reliable, and time-bound delivery for a wide range of shipments with proper handling and compliance support.",
     category: "Air Freight",
-    destination: "Pune → Benglore"
   },
   {
     id: 3,
-    image: HeroImage3,
-    title: "LCL Shipment to Australia",
-    description: "Coordinated LCL (Less than Container Load) shipment of electronics and consumer goods from Chennai to Sydney. Successfully consolidated multiple small shipments into a single container, optimizing costs for our clients. The shipment included smartphones, laptops, and electronic accessories.",
-    date: "October 2024",
-    category: "LCL Freight",
-    destination: "Chennai → Sydney"
+    images: [HeroImage3],
+    title: "Specialize In Secondhand Machinery Import & Custom Clearance.",
+    description:
+      "Coordinated LCL (Less than Container Load) shipment of electronics and consumer goods from Chennai to Sydney. Successfully consolidated multiple small shipments into a single container, optimizing costs for our clients. The shipment included smartphones, laptops, and electronic accessories.",
+
+    category: "Secondhand Machinery Import",
   },
-  {
-    id: 4,
-    image: HeroImage4,
-    title: "Express Delivery to Kashmir",
-    description: "Handled urgent delivery of pharmaceutical products from Mumbai to Kashmir. Ensured temperature-controlled transportation and compliance with all pharmaceutical regulations. The shipment included vaccines, medicines, and medical equipment with a total value of £300,000.",
-    date: "September 2024",
-    category: "Express Freight",
-    destination: "Mumbai → Kashmir"
-  }
 ];
 
 const LatestServices = () => {
+  const [currentImages, setCurrentImages] = useState(
+    latestServices.map(() => 0),
+  );
+
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+  const [activeTouchIndex, setActiveTouchIndex] = useState(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImages((prev) =>
+        prev.map((current, index) => {
+          const totalImages = latestServices[index].images.length;
+          return (current + 1) % totalImages;
+        }),
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const nextImage = (serviceIndex) => {
+    setCurrentImages((prev) =>
+      prev.map((imgIndex, i) =>
+        i === serviceIndex
+          ? (imgIndex + 1) % latestServices[serviceIndex].images.length
+          : imgIndex,
+      ),
+    );
+  };
+
+  const prevImage = (serviceIndex) => {
+    setCurrentImages((prev) =>
+      prev.map((imgIndex, i) =>
+        i === serviceIndex
+          ? (imgIndex - 1 + latestServices[serviceIndex].images.length) %
+            latestServices[serviceIndex].images.length
+          : imgIndex,
+      ),
+    );
+  };
+
+  const goToImage = (serviceIndex, imageIndex) => {
+    setCurrentImages((prev) =>
+      prev.map((imgIndex, i) => (i === serviceIndex ? imageIndex : imgIndex)),
+    );
+  };
+
+  const handleTouchStart = (e, serviceIndex) => {
+    setTouchStartX(e.touches[0].clientX);
+    setActiveTouchIndex(serviceIndex);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (
+      touchStartX !== null &&
+      touchEndX !== null &&
+      activeTouchIndex !== null
+    ) {
+      const distance = touchStartX - touchEndX;
+
+      if (distance > 50) {
+        nextImage(activeTouchIndex);
+      } else if (distance < -50) {
+        prevImage(activeTouchIndex);
+      }
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+    setActiveTouchIndex(null);
+  };
+
   return (
-    <section id="achievements" className="py-20 bg-gray-50">
+    <section id="achievements" className="pb-10 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <motion.div 
-          variants={SlideRight(0.2)} 
-          whileInView="animate" 
+        <motion.div
+          variants={SlideRight(0.2)}
+          whileInView="animate"
           initial="initial"
           className="text-center mb-12"
         >
@@ -59,7 +130,8 @@ const LatestServices = () => {
             Our Achievements
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Discover our recent successful shipments and logistics solutions that have helped businesses expand globally.
+            Discover our recent successful shipments and logistics solutions
+            that have helped businesses expand globally.
           </p>
         </motion.div>
 
@@ -70,26 +142,72 @@ const LatestServices = () => {
               variants={SlideRight(0.2 + index * 0.1)}
               whileInView="animate"
               initial="initial"
-              className={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 items-center`}
+              className={`flex flex-col ${index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 items-center`}
             >
-              {/* Image Section */}
+              {/* Image Carousel Section */}
               <div className="w-full lg:w-1/2">
-                <div className="relative group overflow-hidden rounded-2xl shadow-lg">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div
+                  className="relative group overflow-hidden rounded-2xl shadow-lg bg-white/10 backdrop-blur-sm"
+                  onTouchStart={(e) => handleTouchStart(e, index)}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  {/* Image */}
+                  <div className="relative h-80 overflow-hidden">
+                    <img
+                      src={service.images[currentImages[index]]}
+                      alt={`${service.title} ${currentImages[index] + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                  </div>
+
+                  {/* Navigation Buttons */}
+                  {service.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => prevImage(index)}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-2 hover:bg-white/30 transition-all duration-300 z-20"
+                      >
+                        <span className="text-white text-xl">‹</span>
+                      </button>
+
+                      <button
+                        onClick={() => nextImage(index)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-2 hover:bg-white/30 transition-all duration-300 z-20"
+                      >
+                        <span className="text-white text-xl">›</span>
+                      </button>
+                    </>
+                  )}
+
+                  {/* Dots Indicator */}
+                  {service.images.length > 1 && (
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                      {service.images.map((_, imgIndex) => (
+                        <button
+                          key={imgIndex}
+                          onClick={() => goToImage(index, imgIndex)}
+                          className={`h-2 rounded-full transition-all duration-300 ${
+                            imgIndex === currentImages[index]
+                              ? "bg-white w-6"
+                              : "bg-white/50 w-2"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Category Badge */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white z-20">
                     <div className="flex items-center gap-4 text-sm">
-                      <span className="bg-primary/80 px-3 py-1 rounded-full">{service.category}</span>
-                      <span className="bg-white/20 px-3 py-1 rounded-full">{service.date}</span>
+                      <span className="bg-primary/80 px-3 py-1 rounded-full">
+                        {service.category}
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
-
               {/* Content Section */}
               <div className="w-full lg:w-1/2 space-y-4">
                 <div className="space-y-2">
@@ -97,8 +215,6 @@ const LatestServices = () => {
                     <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
                       {service.category}
                     </span>
-                    <span className="text-gray-400">•</span>
-                    <span>{service.date}</span>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 leading-tight">
                     {service.title}
@@ -107,21 +223,37 @@ const LatestServices = () => {
                     {service.destination}
                   </p>
                 </div>
-                
+
                 <p className="text-gray-700 leading-relaxed">
                   {service.description}
                 </p>
 
                 <div className="flex items-center gap-4 pt-4">
                   <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <span>Completed</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-green-600">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <span>Successfully Delivered</span>
                   </div>
@@ -135,4 +267,4 @@ const LatestServices = () => {
   );
 };
 
-export default LatestServices; 
+export default LatestServices;

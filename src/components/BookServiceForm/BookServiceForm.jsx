@@ -127,6 +127,7 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
             duration: 0.5 
           }}
         >
+          <div className="w-full flex justify-center px-2">
           <form
             onSubmit={handleSubmit}
             className="relative w-full backdrop-blur-2xl bg-white/10 p-6 sm:p-8 rounded-3xl border-2 border-gray-400/20 shadow-2xl hover:shadow-gray-400/10 transition-all duration-500 overflow-hidden"
@@ -145,7 +146,7 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
             </button>
 
             <motion.h2 
-              className="text-3xl md:text-4xl font-bold mb-6 text-center text-white drop-shadow-lg flex items-center justify-center gap-4"
+              className="text-2xl md:text-4xl sm:text-2xl font-bold mb-6 text-center text-white drop-shadow-lg flex items-center justify-center gap-4"
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
@@ -272,6 +273,7 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
           </motion.div>
         )}
       </form>
+      </div>
       </motion.div>
     </motion.div>
     </AnimatePresence>

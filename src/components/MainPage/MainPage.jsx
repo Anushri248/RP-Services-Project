@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 // Import service images
-import HeroImage1 from "../../assets/services-images/img1.jpg";
-import HeroImage2 from "../../assets/services-images/furnece.jpg";
-import HeroImage3 from "../../assets/services-images/img3.jpg";
-import HeroImage4 from "../../assets/services-images/img4.jpg";
-import HeroImage5 from "../../assets/services-images/img5.jpg";
-import HeroImage6 from "../../assets/services-images/img6.jpg";
+import HeroImage1 from "../../assets/mainPage/img1.png";
+import HeroImage2 from "../../assets/mainPage/img2.jpeg";
+import HeroImage3 from "../../assets/mainPage/img3.jpg";
+import HeroImage4 from "../../assets/mainPage/img4.jpg";
+import HeroImage5 from "../../assets/mainPage/img5.jpg";
+import HeroImage6 from "../../assets/mainPage/img6.jpg";
 
 import { SlideUp } from '../Utility/animation';
 import {motion} from "framer-motion";
@@ -126,7 +126,7 @@ const MainPage = () => {
             <motion.p  variants={SlideUp(0.6)} 
               whileInView="animate" 
               initial="initial" className='text-lg md:text-xl text-gray-200 max-w-xl leading-relaxed md:ml-16'>
-              Your trusted partner in international trade. We provide comprehensive import-export 
+              Your trusted partner in international trade. We provide end-to-end import-export 
               solutions with expertise in logistics, compliance, and global market access.
             </motion.p>
             <motion.div  variants={SlideUp(0.8)} 
@@ -173,10 +173,10 @@ const MainPage = () => {
               </div>
               
               {/* Service Description */}
-              <div className='absolute bottom-0 left-0 right-0 p-6 text-white'>
+              {/* <div className='absolute bottom-0 left-0 right-0 p-6 text-white'>
                 <h3 className='text-xl font-bold mb-2'>{serviceCarousel[currentImage].title}</h3>
                 <p className='text-sm text-gray-200'>{serviceCarousel[currentImage].description}</p>
-              </div>
+              </div> */}
 
               {/* Navigation Buttons */}
               <button 

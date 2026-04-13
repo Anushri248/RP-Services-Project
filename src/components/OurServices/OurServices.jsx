@@ -34,9 +34,9 @@ const coreServices = [
   {
     id: "cha-activities",
     image: Img3,
-    heading: "CHA Activities (All custom-related work)",
+    heading: "Specialized Breakbulk & Hazardous Cargo Services",
     description:
-      "Expert handling of all customs-related activities and documentation for hassle-free logistics.",
+      "Safe and efficient handling of breakbulk and hazardous shipments with expert logistics support.",
   },
   {
     id: "export-licenses",
@@ -98,7 +98,7 @@ const OurServices = ({ setShowBookServiceModal }) => {
   };
 
   return (
-    <section id="services" className="py-20 bg-white w-full">
+    <section id="services" className="pt-10 bg-white w-full">
       <div className="w-full px-4 md:px-8 max-w-7xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text mb-8 text-center w-full">
           Core Import & Export Services
