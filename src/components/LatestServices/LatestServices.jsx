@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { SlideRight } from "../Utility/animation";
-import HeroImage1 from "../../assets/services-images/img1.jpg";
-import HeroImage2 from "../../assets/services-images/air2.jpeg";
-import HeroImage3 from "../../assets/services-images/img3.jpg";
+
+import HeroImage2 from "../../assets/services-images/air2.webp";
+import HeroImage3 from "../../assets/services-images/secondhand1.webp";
 import HeroImage4 from "../../assets/services-images/img4.jpg";
-import UsImage1 from "../../assets/project_img/us/img1.png";
-import UsImage2 from "../../assets/project_img/us/img2.jpeg";
-import UsImage3 from "../../assets/project_img/us/img3.jpeg";
-import UsImage4 from "../../assets/project_img/us/img4.jpeg";
+import UsImage1 from "../../assets/project_img/us/img1.webp";
+import UsImage2 from "../../assets/project_img/us/img2.webp";
+import UsImage3 from "../../assets/project_img/us/img3.webp";
+import UsImage4 from "../../assets/project_img/us/img4.webp";
 
 const latestServices = [
   {

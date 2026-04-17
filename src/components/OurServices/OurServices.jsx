@@ -1,15 +1,15 @@
 import React from "react";
 import ServiceCardImage from "./CardComp";
 import ServiceCardIcon from "./ServiceCardIcon";
-import Img1 from "../../assets/Uses/1.png";
-import Img2 from "../../assets/Uses/2.png";
-import Img3 from "../../assets/Uses/3.png";
-import Img4 from "../../assets/Uses/license.png";
-import Img5 from "../../assets/Uses/insurance-img.png";
+import Img1 from "../../assets/Uses/air.webp";
+import Img2 from "../../assets/Uses/sea.webp";
+import Img3 from "../../assets/Uses/breakbulk.webp";
+import Img4 from "../../assets/Uses/license.webp";
+import Img5 from "../../assets/Uses/insurance.webp";
 import Icon1 from "../../assets/Icon1.png";
 import Icon2 from "../../assets/Icon2.png";
 import Icon3 from "../../assets/Icon3.png";
-import bookServiceImg from "../../assets/book_service_img1.png";
+import bookServiceImg from "../../assets/book_service_img1.webp";
 import BookServiceForm from "../BookServiceForm/BookServiceForm";
 
 // import BookServiceForm from '../BookServiceForm/BookServiceForm'; // To be created
