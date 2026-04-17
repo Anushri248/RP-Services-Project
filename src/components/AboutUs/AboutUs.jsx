@@ -42,7 +42,7 @@ const AboutUs = () => {
               <img
                 src={Image1}
                 alt="Global Trading"
-                className="w-full h-64 object-cover rounded-xl relative"
+                className="w-full h-80 object-cover rounded-xl relative"
               />
             </div>
             <h3 className="text-2xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text">
@@ -74,7 +74,7 @@ const AboutUs = () => {
               <img
                 src={Image2}
                 alt="Logistics Solutions"
-                className="w-full h-64 object-cover rounded-xl relative"
+                className="w-full h-80 object-cover rounded-xl relative"
               />
             </div>
             <h3 className="text-2xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text">

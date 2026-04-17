@@ -9,8 +9,7 @@ const Uses = () => {
   return (
     <section className='py-10 bg-gradient-to-b from-white to-gray-50'>
         <div className="container">
-            <div className="grid grid-cols-1 md:grid-cols-2 
-            xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                 
                 <motion.div  variants={SlideLeft(0.2)} 
                   whileInView="animate" 
@@ -44,7 +43,7 @@ const Uses = () => {
                 >
                     <div className="relative overflow-hidden rounded-2xl">
                         <div className='absolute inset-0 bg-gradient-to-r from-secondary/30 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                        <img src={Img1} alt="Air Freight Services" className='w-full h-64 object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-300'/>
+                        <img src={Img1} alt="Air Freight Services" className='w-full h-64 lg:h-80 object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-300 shadow-sm'/>
                     </div>
                     <div className="p-4">
                         <h3 className='mt-4 text-xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text'>
@@ -63,7 +62,7 @@ const Uses = () => {
                   hover:bg-gradient-to-r hover:from-secondary/5 hover:to-primary/5 transition-all duration-300"
                 >
                     <div className="relative overflow-hidden rounded-2xl">
-                        <img src={Img2} alt="Global Trade & Logistics" className='w-full h-64 object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-300'/>
+                        <img src={Img2} alt="Global Trade & Logistics" className='w-full h-64 lg:h-80 object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-300 shadow-sm'/>
                     </div>
                     <div className="p-4">
                         <h3 className='mt-4 text-xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text'>
@@ -85,7 +84,7 @@ const Uses = () => {
                 >
                     <div className="relative overflow-hidden rounded-2xl">
                         <div className='absolute inset-0 bg-gradient-to-r from-secondary/30 to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                        <img src={Img3} alt="Customs & Compliance" className='w-full h-64 object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-300'/>
+                        <img src={Img3} alt="Customs & Compliance" className='w-full h-64 lg:h-80 object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-300 shadow-sm'/>
                     </div>
                     <div className="p-4">
                         <h3 className='mt-4 text-xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text'>
