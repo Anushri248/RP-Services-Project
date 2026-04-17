@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // Import service images
 import HeroImage1 from "../../assets/mainPage/img1.webp";
 import HeroImage2 from "../../assets/mainPage/img2.webp";
@@ -51,31 +51,61 @@ const serviceCarousel = [
 
 const MainPage = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  // Touch state for swipe
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
+  const carouselRef = useRef(null);
+  const scrollTimeout = useRef(null);
 
-  // Auto-advance carousel
+  const handleScroll = (e) => {
+    if (!carouselRef.current) return;
+    const scrollPosition = e.target.scrollLeft;
+    const width = e.target.clientWidth;
+    const rawCurrent = Math.round(scrollPosition / width);
+    
+    const normalizedCurrent = rawCurrent === serviceCarousel.length ? 0 : rawCurrent;
+    if (normalizedCurrent !== currentImage) {
+      setCurrentImage(normalizedCurrent);
+    }
+
+    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    scrollTimeout.current = setTimeout(() => {
+      if (!carouselRef.current) return;
+      const currentSnap = Math.round(carouselRef.current.scrollLeft / width);
+      if (currentSnap === serviceCarousel.length) {
+        const oldBehavior = carouselRef.current.style.scrollBehavior;
+        carouselRef.current.style.scrollBehavior = 'auto';
+        carouselRef.current.scrollTo({ left: 0, behavior: 'auto' });
+        carouselRef.current.style.scrollBehavior = oldBehavior;
+      }
+    }, 250);
+  };
 
   useEffect(() => {
     let interval;
-
     const start = () => {
       interval = setInterval(() => {
-        setCurrentImage((prev) => (prev + 1) % serviceCarousel.length);
+        if (!carouselRef.current) return;
+        const width = carouselRef.current.clientWidth;
+        const currentSnap = Math.round(carouselRef.current.scrollLeft / width);
+        const newIndex = currentSnap === serviceCarousel.length - 1 ? serviceCarousel.length : currentSnap + 1;
+        
+        carouselRef.current.scrollTo({
+          left: newIndex * width,
+          behavior: 'smooth'
+        });
       }, 4000);
     };
-
     const stop = () => clearInterval(interval);
 
     start();
-
-    document.addEventListener("visibilitychange", () => {
+    const handleVisibilityChange = () => {
       if (document.hidden) stop();
       else start();
-    });
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    return () => stop();
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   // ✅ ADD THIS HERE (Preload images)
@@ -87,37 +117,34 @@ const MainPage = () => {
   }, []);
 
   const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % serviceCarousel.length);
+    if (carouselRef.current) {
+      const newIndex = currentImage === serviceCarousel.length - 1 ? serviceCarousel.length : currentImage + 1;
+      carouselRef.current.scrollTo({
+        left: newIndex * carouselRef.current.clientWidth,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const prevImage = () => {
-    setCurrentImage(
-      (prev) => (prev - 1 + serviceCarousel.length) % serviceCarousel.length,
-    );
-  };
-
-  // Touch event handlers
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEndX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStartX !== null && touchEndX !== null) {
-      const distance = touchStartX - touchEndX;
-      if (distance > 50) {
-        // Swiped left
-        nextImage();
-      } else if (distance < -50) {
-        // Swiped right
-        prevImage();
-      }
+    if (carouselRef.current) {
+      const newIndex = currentImage === 0 ? serviceCarousel.length - 1 : currentImage - 1;
+      carouselRef.current.scrollTo({
+        left: newIndex * carouselRef.current.clientWidth,
+        behavior: 'smooth'
+      });
     }
-    setTouchStartX(null);
-    setTouchEndX(null);
+  };
+
+  const goToImage = (index) => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({
+        left: index * carouselRef.current.clientWidth,
+        behavior: 'smooth'
+      });
+    } else {
+      setCurrentImage(index);
+    }
   };
 
   const scrollToServices = () => {
@@ -206,25 +233,34 @@ const MainPage = () => {
         >
           <div className="relative w-full max-w-4xl">
             {/* Carousel Container */}
-            <div
-              className="relative bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              {/* Image */}
-              {/* <div className="relative h-[25rem] overflow-hidden"> */}
-                 <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden">
-                <img
-                  src={serviceCarousel[currentImage].image}
-                  alt={serviceCarousel[currentImage].title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-               </div>
-                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div> */}
-              {/* </div> */}
-              {/* Overlay for better text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl">
+              <div 
+                ref={carouselRef}
+                onScroll={handleScroll}
+                className="flex w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              >
+                {serviceCarousel.map((item, index) => (
+                  <div key={index} className="relative min-w-full aspect-[4/3] md:aspect-[16/10] snap-center overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                ))}
+                {/* Clone for infinite scroll */}
+                {serviceCarousel.length > 1 && (
+                  <div className="relative min-w-full aspect-[4/3] md:aspect-[16/10] snap-center overflow-hidden">
+                    <img
+                      src={serviceCarousel[0].image}
+                      alt={`${serviceCarousel[0].title} loop`}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
             </div>
 
             {/* Service Description */}
@@ -252,7 +288,7 @@ const MainPage = () => {
               {serviceCarousel.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentImage(index)}
+                  onClick={() => goToImage(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === currentImage ? "bg-white w-6" : "bg-white/50"
                   }`}

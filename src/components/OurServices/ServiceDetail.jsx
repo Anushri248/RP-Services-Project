@@ -122,14 +122,40 @@ const ServiceDetail = () => {
 
   const carouselRef = useRef(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [serviceId]);
+
+  const scrollTimeout = useRef(null);
+
   const handleScroll = (e) => {
     if (!carouselRef.current) return;
     const scrollPosition = e.target.scrollLeft;
     const width = e.target.clientWidth;
-    const newCurrent = Math.round(scrollPosition / width);
-    if (newCurrent !== current) {
-      setCurrent(newCurrent);
+    const rawCurrent = Math.round(scrollPosition / width);
+    
+    const normalizedCurrent = rawCurrent === images.length ? 0 : rawCurrent;
+    if (normalizedCurrent !== current) {
+      setCurrent(normalizedCurrent);
     }
+
+    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    scrollTimeout.current = setTimeout(() => {
+      if (!carouselRef.current) return;
+      const currentSnap = Math.round(carouselRef.current.scrollLeft / width);
+      if (currentSnap === images.length) {
+        // Temporarily unset scroll behavior to guarantee instant jump on all browsers
+        const oldBehavior = carouselRef.current.style.scrollBehavior;
+        carouselRef.current.style.scrollBehavior = 'auto';
+        
+        carouselRef.current.scrollTo({
+          left: 0,
+          behavior: 'auto' // instant
+        });
+        
+        carouselRef.current.style.scrollBehavior = oldBehavior;
+      }
+    }, 250);
   };
 
   const [showBookServiceModal, setShowBookServiceModal] = useState(false);
@@ -147,7 +173,7 @@ const ServiceDetail = () => {
 
   const nextImage = () => {
     if (carouselRef.current) {
-      const newIndex = (current + 1) % images.length;
+      const newIndex = current === images.length - 1 ? images.length : current + 1;
       carouselRef.current.scrollTo({
         left: newIndex * carouselRef.current.clientWidth,
         behavior: 'smooth'
@@ -157,7 +183,7 @@ const ServiceDetail = () => {
 
   const prevImage = () => {
     if (carouselRef.current) {
-      const newIndex = (current - 1 + images.length) % images.length;
+      const newIndex = current === 0 ? images.length - 1 : current - 1;
       carouselRef.current.scrollTo({
         left: newIndex * carouselRef.current.clientWidth,
         behavior: 'smooth'
@@ -200,7 +226,7 @@ const ServiceDetail = () => {
             <div 
               ref={carouselRef}
               onScroll={handleScroll}
-              className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              className="flex w-full h-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
               {images.map((img, idx) => (
                 <img
@@ -211,6 +237,14 @@ const ServiceDetail = () => {
                   loading="eager"
                 />
               ))}
+              {images.length > 1 && (
+                <img
+                  src={images[0]}
+                  alt={`${service.heading} - 1 (loop)`}
+                  className="object-cover min-w-full h-full snap-center"
+                  loading="lazy"
+                />
+              )}
             </div>
             {images.length > 1 && (
               <>
