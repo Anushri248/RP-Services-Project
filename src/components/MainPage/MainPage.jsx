@@ -236,13 +236,13 @@ const MainPage = () => {
             {/* Navigation Buttons */}
             <button
               onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-all duration-300"
+              className="absolute left-4 top-[60%] md:top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-all duration-300"
             >
               <span className="text-white text-xl">‹</span>
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-all duration-300"
+              className="absolute right-4 top-[60%] md:top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 md:p-2 hover:bg-white/30 transition-all duration-300"
             >
               <span className="text-white text-xl">›</span>
             </button>
