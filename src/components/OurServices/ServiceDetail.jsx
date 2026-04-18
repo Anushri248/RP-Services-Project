@@ -128,6 +128,40 @@ const ServiceDetail = () => {
 
   const scrollTimeout = useRef(null);
 
+  const autoAdvanceInterval = useRef(null);
+
+  const startAutoAdvance = () => {
+    if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current);
+    autoAdvanceInterval.current = setInterval(() => {
+      if (!carouselRef.current || images.length <= 1) return;
+      const width = carouselRef.current.clientWidth;
+      const currentSnap = Math.round(carouselRef.current.scrollLeft / width);
+      const newIndex = currentSnap === images.length - 1 ? images.length : currentSnap + 1;
+      
+      carouselRef.current.scrollTo({
+        left: newIndex * width,
+        behavior: 'smooth'
+      });
+    }, 4000);
+  };
+
+  useEffect(() => {
+    startAutoAdvance();
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current);
+      } else {
+        startAutoAdvance();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [serviceId]);
+
   const handleScroll = (e) => {
     if (!carouselRef.current) return;
     const scrollPosition = e.target.scrollLeft;
@@ -172,6 +206,7 @@ const ServiceDetail = () => {
   }
 
   const nextImage = () => {
+    startAutoAdvance();
     if (carouselRef.current) {
       const newIndex = current === images.length - 1 ? images.length : current + 1;
       carouselRef.current.scrollTo({
@@ -182,6 +217,7 @@ const ServiceDetail = () => {
   };
 
   const prevImage = () => {
+    startAutoAdvance();
     if (carouselRef.current) {
       const newIndex = current === 0 ? images.length - 1 : current - 1;
       carouselRef.current.scrollTo({
@@ -192,6 +228,7 @@ const ServiceDetail = () => {
   };
 
   const goToImage = (idx) => {
+    startAutoAdvance();
     if (carouselRef.current) {
       carouselRef.current.scrollTo({
         left: idx * carouselRef.current.clientWidth,
@@ -226,6 +263,10 @@ const ServiceDetail = () => {
             <div 
               ref={carouselRef}
               onScroll={handleScroll}
+              onMouseEnter={() => { if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current); }}
+              onMouseLeave={startAutoAdvance}
+              onTouchStart={() => { if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current); }}
+              onTouchEnd={startAutoAdvance}
               className="flex w-full h-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
               {images.map((img, idx) => (
@@ -233,7 +274,7 @@ const ServiceDetail = () => {
                   key={idx}
                   src={img}
                   alt={`${service.heading} - ${idx + 1}`}
-                  className="object-cover min-w-full h-full snap-center"
+                  className="object-cover min-w-full h-full snap-center snap-always"
                   loading="eager"
                 />
               ))}
@@ -241,7 +282,7 @@ const ServiceDetail = () => {
                 <img
                   src={images[0]}
                   alt={`${service.heading} - 1 (loop)`}
-                  className="object-cover min-w-full h-full snap-center"
+                  className="object-cover min-w-full h-full snap-center snap-always"
                   loading="lazy"
                 />
               )}

@@ -54,6 +54,23 @@ const MainPage = () => {
   const carouselRef = useRef(null);
   const scrollTimeout = useRef(null);
 
+  const autoAdvanceInterval = useRef(null);
+
+  const startAutoAdvance = () => {
+    if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current);
+    autoAdvanceInterval.current = setInterval(() => {
+      if (!carouselRef.current) return;
+      const width = carouselRef.current.clientWidth;
+      const currentSnap = Math.round(carouselRef.current.scrollLeft / width);
+      const newIndex = currentSnap === serviceCarousel.length - 1 ? serviceCarousel.length : currentSnap + 1;
+      
+      carouselRef.current.scrollTo({
+        left: newIndex * width,
+        behavior: 'smooth'
+      });
+    }, 4000);
+  };
+
   const handleScroll = (e) => {
     if (!carouselRef.current) return;
     const scrollPosition = e.target.scrollLeft;
@@ -79,31 +96,18 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    let interval;
-    const start = () => {
-      interval = setInterval(() => {
-        if (!carouselRef.current) return;
-        const width = carouselRef.current.clientWidth;
-        const currentSnap = Math.round(carouselRef.current.scrollLeft / width);
-        const newIndex = currentSnap === serviceCarousel.length - 1 ? serviceCarousel.length : currentSnap + 1;
-        
-        carouselRef.current.scrollTo({
-          left: newIndex * width,
-          behavior: 'smooth'
-        });
-      }, 4000);
-    };
-    const stop = () => clearInterval(interval);
-
-    start();
+    startAutoAdvance();
     const handleVisibilityChange = () => {
-      if (document.hidden) stop();
-      else start();
+      if (document.hidden) {
+        if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current);
+      } else {
+        startAutoAdvance();
+      }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      stop();
+      if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
@@ -117,6 +121,7 @@ const MainPage = () => {
   }, []);
 
   const nextImage = () => {
+    startAutoAdvance();
     if (carouselRef.current) {
       const newIndex = currentImage === serviceCarousel.length - 1 ? serviceCarousel.length : currentImage + 1;
       carouselRef.current.scrollTo({
@@ -127,6 +132,7 @@ const MainPage = () => {
   };
 
   const prevImage = () => {
+    startAutoAdvance();
     if (carouselRef.current) {
       const newIndex = currentImage === 0 ? serviceCarousel.length - 1 : currentImage - 1;
       carouselRef.current.scrollTo({
@@ -137,6 +143,7 @@ const MainPage = () => {
   };
 
   const goToImage = (index) => {
+    startAutoAdvance();
     if (carouselRef.current) {
       carouselRef.current.scrollTo({
         left: index * carouselRef.current.clientWidth,
@@ -237,10 +244,14 @@ const MainPage = () => {
               <div 
                 ref={carouselRef}
                 onScroll={handleScroll}
+                onMouseEnter={() => { if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current); }}
+                onMouseLeave={startAutoAdvance}
+                onTouchStart={() => { if (autoAdvanceInterval.current) clearInterval(autoAdvanceInterval.current); }}
+                onTouchEnd={startAutoAdvance}
                 className="flex w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
               >
                 {serviceCarousel.map((item, index) => (
-                  <div key={index} className="relative min-w-full aspect-[4/3] md:aspect-[16/10] snap-center overflow-hidden">
+                  <div key={index} className="relative min-w-full aspect-[4/3] md:aspect-[16/10] snap-center snap-always overflow-hidden">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -250,7 +261,7 @@ const MainPage = () => {
                 ))}
                 {/* Clone for infinite scroll */}
                 {serviceCarousel.length > 1 && (
-                  <div className="relative min-w-full aspect-[4/3] md:aspect-[16/10] snap-center overflow-hidden">
+                  <div className="relative min-w-full aspect-[4/3] md:aspect-[16/10] snap-center snap-always overflow-hidden">
                     <img
                       src={serviceCarousel[0].image}
                       alt={`${serviceCarousel[0].title} loop`}

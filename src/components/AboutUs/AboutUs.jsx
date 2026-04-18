@@ -9,7 +9,7 @@ const AboutUs = () => {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-b from-white to-gray-50 w-full"
+      className="pt-20 bg-gradient-to-b from-white to-gray-50 w-full"
     >
       <div className="w-full px-4 md:px-8">
         <motion.div

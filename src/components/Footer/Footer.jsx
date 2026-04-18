@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { HashLink } from 'react-router-hash-link';
 import { motion } from "framer-motion";
 import logo from "../../assets/logo.png";
 
@@ -44,44 +44,44 @@ const Footer = () => {
             </h3>
             <ul className="flex flex-col space-y-3 ">
               <li className=" lg:pl-20">
-                <a
-                  href="#home"
+                <HashLink
+                  to="/#home" smooth
                   className="text-gray-200 hover:text-white hover:underline transition-colors"
                 >
                   Home
-                </a>
+                </HashLink>
               </li>
-                  <li className=" lg:pl-20">
-                <a
-                  href="#services"
+              <li className=" lg:pl-20">
+                <HashLink
+                  to="/#services" smooth
                   className="text-gray-200 hover:text-white hover:underline transition-colors"
                 >
                   Our Services
-                </a>
+                </HashLink>
               </li>
-                 <li className=" lg:pl-20">
-                <a
-                  href="#achievements"
+              <li className=" lg:pl-20">
+                <HashLink
+                  to="/#achievements" smooth
                   className="text-gray-200 hover:text-white hover:underline transition-colors"
                 >
                   Our Achievements
-                </a>
+                </HashLink>
               </li>
-               <li className=" lg:pl-20">
-                <a
-                  href="#about"
+              <li className=" lg:pl-20">
+                <HashLink
+                  to="/#about" smooth
                   className="text-gray-200 hover:text-white hover:underline transition-colors"
                 >
                   About Us
-                </a>
+                </HashLink>
               </li>
-             <li className=" lg:pl-20">
-                <a
-                  href="#contact"
+              <li className=" lg:pl-20">
+                <HashLink
+                  to="/#contact" smooth
                   className="text-gray-200 hover:text-white hover:underline transition-colors"
                 >
                   Contact Us
-                </a>
+                </HashLink>
               </li>
             </ul>
           </div>
@@ -170,33 +170,26 @@ const Footer = () => {
                   1. Information We Collect
                 </h3>
                 <p className="mb-4">
-                  We collect information that you provide directly to us,
-                  including when you create an account, make a purchase, or
-                  contact us for support.
+                  We collect information you provide directly to us when inquiring about our logistics, customs clearance, and global trade services. This includes your name, company details, email address, phone number, and shipment-specific information necessary to provide accurate quotes and logistics solutions.
                 </p>
 
                 <h3 className="text-lg font-semibold mb-2">
                   2. How We Use Your Information
                 </h3>
                 <p className="mb-4">
-                  We use the information we collect to provide, maintain, and
-                  improve our services, to process your transactions, and to
-                  communicate with you.
+                  The information we collect is strictly used to process your logistics inquiries, facilitate freight forwarding, manage customs documentation, and communicate updates regarding your shipments. We may also use this information to improve our services and comply with international trade regulations.
                 </p>
 
                 <h3 className="text-lg font-semibold mb-2">
                   3. Information Sharing
                 </h3>
                 <p className="mb-4">
-                  We do not sell or share your personal information with third
-                  parties except as described in this privacy policy.
+                  As a global logistics provider, we may share necessary shipment and contact information with trusted third-party partners, including shipping lines, airlines, customs authorities, and local transport operators solely for the purpose of executing your freight forwarding and clearance requests. We do not sell or rent your personal data to third parties.
                 </p>
 
                 <h3 className="text-lg font-semibold mb-2">4. Data Security</h3>
                 <p className="mb-4">
-                  We implement appropriate technical and organizational measures
-                  to protect your personal information against unauthorized
-                  access or disclosure.
+                  We implement robust technical and organizational security measures to protect your sensitive trade documents and personal information against unauthorized access, loss, or disclosure.
                 </p>
               </div>
               <div className="mt-6 flex justify-end">
@@ -245,35 +238,28 @@ const Footer = () => {
                   1. Acceptance of Terms
                 </h3>
                 <p className="mb-4">
-                  By accessing and using our services, you agree to be bound by
-                  these Terms of Service and all applicable laws and
-                  regulations.
+                  By accessing the RP Services website and engaging with our logistics, customs clearance, and freight forwarding services, you agree to be bound by these Terms of Service and all applicable international trade laws and regulations.
                 </p>
 
                 <h3 className="text-lg font-semibold mb-2">
-                  2. Use of Services
+                  2. Service Provision & Liability
                 </h3>
                 <p className="mb-4">
-                  Our services are provided for your personal and commercial use
-                  subject to these terms. You agree not to misuse our services
-                  or help anyone else do so.
+                  RP Services acts as a logistics facilitator and customs clearing agent. While we strive to ensure timely delivery and seamless clearance of goods (including air freight, sea freight, and secondhand machinery), we are not liable for delays caused by extreme weather, port congestion, customs inspections, or other circumstances beyond our reasonable control (Force Majeure).
                 </p>
 
                 <h3 className="text-lg font-semibold mb-2">
-                  3. User Responsibilities
+                  3. Client Responsibilities
                 </h3>
                 <p className="mb-4">
-                  You are responsible for maintaining the confidentiality of
-                  your account and for all activities that occur under your
-                  account.
+                  Clients are solely responsible for providing accurate, legal, and complete documentation for all shipments. Any penalties, storage charges, or legal actions arising from incorrect declarations, prohibited goods, or missing paperwork will be the strict liability of the client.
                 </p>
 
                 <h3 className="text-lg font-semibold mb-2">
-                  4. Service Modifications
+                  4. Quotations and Pricing
                 </h3>
                 <p className="mb-4">
-                  We reserve the right to modify or discontinue our services at
-                  any time without prior notice.
+                  All service quotations provided by RP Services are subject to change based on fluctuating freight rates, carrier surcharges, and customs duty revisions. Final charges will be invoiced based on the actual weight, volume, and regulatory fees applied at the time of shipment processing.
                 </p>
               </div>
               <div className="mt-6 flex justify-end">

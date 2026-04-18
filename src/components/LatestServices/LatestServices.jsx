@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { SlideRight } from "../Utility/animation";
 
@@ -25,7 +25,7 @@ const latestServices = [
     images: [HeroImage2],
     title: "International Air Freight Services",
     description:
-"We provide expedited air freight services for automotive, engineering, pharmaceutical, and hazardous cargo from India to global destinations, and from China, the USA, Europe, and the Gulf to India. Our team ensures fast, reliable, and time-bound delivery for a wide range of shipments with proper handling and compliance support.",
+    "Expedited air freight service for automotive, Engineering, Pharmaceutical & Hazardous Cargo from India to All over Globe & from China, USA , Europe & Gulf to India. Delivered critical shipment to Many Destinations within Time Frame .The shipment included all type of goods."
     category: "Air Freight",
   },
   {
@@ -44,77 +44,86 @@ const LatestServices = () => {
     latestServices.map(() => 0),
   );
 
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchEndX, setTouchEndX] = useState(null);
-  const [activeTouchIndex, setActiveTouchIndex] = useState(null);
+  const carouselRefs = useRef([]);
+  const scrollTimeouts = useRef([]);
+  const autoAdvanceIntervals = useRef([]);
+
+  const startAutoAdvance = (idx) => {
+    if (autoAdvanceIntervals.current[idx]) clearInterval(autoAdvanceIntervals.current[idx]);
+    autoAdvanceIntervals.current[idx] = setInterval(() => {
+      const service = latestServices[idx];
+      const ref = carouselRefs.current[idx];
+      if (!ref || service.images.length <= 1) return;
+      const width = ref.clientWidth;
+      if (width === 0) return;
+      const currentSnap = Math.round(ref.scrollLeft / width);
+      const newIndex = currentSnap === service.images.length - 1 ? service.images.length : currentSnap + 1;
+      ref.scrollTo({ left: newIndex * width, behavior: 'smooth' });
+    }, 4000);
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImages((prev) =>
-        prev.map((current, index) => {
-          const totalImages = latestServices[index].images.length;
-          return (current + 1) % totalImages;
-        }),
-      );
-    }, 4000);
-
-    return () => clearInterval(interval);
+    latestServices.forEach((_, idx) => startAutoAdvance(idx));
+    return () => {
+      autoAdvanceIntervals.current.forEach(interval => {
+        if (interval) clearInterval(interval);
+      });
+    };
   }, []);
 
-  const nextImage = (serviceIndex) => {
-    setCurrentImages((prev) =>
-      prev.map((imgIndex, i) =>
-        i === serviceIndex
-          ? (imgIndex + 1) % latestServices[serviceIndex].images.length
-          : imgIndex,
-      ),
-    );
-  };
+  const handleScroll = (e, idx) => {
+    const ref = carouselRefs.current[idx];
+    if (!ref) return;
 
-  const prevImage = (serviceIndex) => {
-    setCurrentImages((prev) =>
-      prev.map((imgIndex, i) =>
-        i === serviceIndex
-          ? (imgIndex - 1 + latestServices[serviceIndex].images.length) %
-            latestServices[serviceIndex].images.length
-          : imgIndex,
-      ),
-    );
-  };
+    const width = ref.clientWidth;
+    const rawCurrent = Math.round(ref.scrollLeft / width);
+    const totalImages = latestServices[idx].images.length;
+    
+    const normalizedCurrent = rawCurrent === totalImages ? 0 : rawCurrent;
+    setCurrentImages(prev => {
+      if (prev[idx] === normalizedCurrent) return prev;
+      return prev.map((img, i) => i === idx ? normalizedCurrent : img);
+    });
 
-  const goToImage = (serviceIndex, imageIndex) => {
-    setCurrentImages((prev) =>
-      prev.map((imgIndex, i) => (i === serviceIndex ? imageIndex : imgIndex)),
-    );
-  };
-
-  const handleTouchStart = (e, serviceIndex) => {
-    setTouchStartX(e.touches[0].clientX);
-    setActiveTouchIndex(serviceIndex);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEndX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (
-      touchStartX !== null &&
-      touchEndX !== null &&
-      activeTouchIndex !== null
-    ) {
-      const distance = touchStartX - touchEndX;
-
-      if (distance > 50) {
-        nextImage(activeTouchIndex);
-      } else if (distance < -50) {
-        prevImage(activeTouchIndex);
+    if (scrollTimeouts.current[idx]) clearTimeout(scrollTimeouts.current[idx]);
+    scrollTimeouts.current[idx] = setTimeout(() => {
+      if (!ref) return;
+      const currentSnap = Math.round(ref.scrollLeft / width);
+      if (currentSnap === totalImages) {
+        const oldBehavior = ref.style.scrollBehavior;
+        ref.style.scrollBehavior = 'auto';
+        ref.scrollTo({ left: 0, behavior: 'auto' });
+        ref.style.scrollBehavior = oldBehavior;
       }
-    }
+    }, 250);
+  };
 
-    setTouchStartX(null);
-    setTouchEndX(null);
-    setActiveTouchIndex(null);
+  const nextImage = (idx) => {
+    startAutoAdvance(idx); // Reset timer
+    const ref = carouselRefs.current[idx];
+    if (ref) {
+      const currentSnap = Math.round(ref.scrollLeft / ref.clientWidth);
+      const newIndex = currentSnap === latestServices[idx].images.length - 1 ? latestServices[idx].images.length : currentSnap + 1;
+      ref.scrollTo({ left: newIndex * ref.clientWidth, behavior: 'smooth' });
+    }
+  };
+
+  const prevImage = (idx) => {
+    startAutoAdvance(idx); // Reset timer
+    const ref = carouselRefs.current[idx];
+    if (ref) {
+      const currentSnap = Math.round(ref.scrollLeft / ref.clientWidth);
+      const newIndex = currentSnap === 0 ? latestServices[idx].images.length - 1 : currentSnap - 1;
+      ref.scrollTo({ left: newIndex * ref.clientWidth, behavior: 'smooth' });
+    }
+  };
+
+  const goToImage = (idx, imgIndex) => {
+    startAutoAdvance(idx); // Reset timer
+    const ref = carouselRefs.current[idx];
+    if (ref) {
+      ref.scrollTo({ left: imgIndex * ref.clientWidth, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -146,20 +155,37 @@ const LatestServices = () => {
             >
               {/* Image Carousel Section */}
               <div className="w-full lg:w-1/2">
-                <div
-                  className="relative group overflow-hidden rounded-2xl shadow-lg bg-white/10 backdrop-blur-sm"
-                  onTouchStart={(e) => handleTouchStart(e, index)}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                >
-                  {/* Image */}
-                  <div className="relative h-80 overflow-hidden">
-                    <img
-                      src={service.images[currentImages[index]]}
-                      alt={`${service.title} ${currentImages[index] + 1}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                <div className="relative group rounded-2xl shadow-lg bg-white/10 backdrop-blur-sm overflow-hidden">
+                  <div 
+                    ref={el => carouselRefs.current[index] = el}
+                    onScroll={(e) => handleScroll(e, index)}
+                    onMouseEnter={() => { if (autoAdvanceIntervals.current[index]) clearInterval(autoAdvanceIntervals.current[index]); }}
+                    onMouseLeave={() => startAutoAdvance(index)}
+                    onTouchStart={() => { if (autoAdvanceIntervals.current[index]) clearInterval(autoAdvanceIntervals.current[index]); }}
+                    onTouchEnd={() => startAutoAdvance(index)}
+                    className="flex w-full h-80 overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                  >
+                    {service.images.map((img, imgIdx) => (
+                      <div key={imgIdx} className="relative min-w-full h-full snap-center snap-always overflow-hidden">
+                        <img
+                          src={img}
+                          alt={`${service.title} ${imgIdx + 1}`}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+                      </div>
+                    ))}
+                    {/* Clone for loop */}
+                    {service.images.length > 1 && (
+                      <div className="relative min-w-full h-full snap-center snap-always overflow-hidden">
+                        <img
+                          src={service.images[0]}
+                          alt={`${service.title} loop`}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Navigation Buttons */}
