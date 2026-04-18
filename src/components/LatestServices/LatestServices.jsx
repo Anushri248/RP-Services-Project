@@ -25,7 +25,7 @@ const latestServices = [
     images: [HeroImage2],
     title: "International Air Freight Services",
     description:
-    "Expedited air freight service for automotive, Engineering, Pharmaceutical & Hazardous Cargo from India to All over Globe & from China, USA , Europe & Gulf to India. Delivered critical shipment to Many Destinations within Time Frame .The shipment included all type of goods."
+    "Expedited air freight service for automotive, Engineering, Pharmaceutical & Hazardous Cargo from India to All over Globe & from China, USA , Europe & Gulf to India. Delivered critical shipment to Many Destinations within Time Frame .The shipment included all type of goods.",
     category: "Air Freight",
   },
   {
