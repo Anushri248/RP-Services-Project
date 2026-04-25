@@ -12,20 +12,30 @@ const StudentEnquiryForm = () => {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const submitData = new FormData();
-    Object.entries(formData).forEach(([key, value]) => submitData.append(key, value));
-    submitData.append("access_key", "d0c8a8c2-7c76-4cb7-8682-2b6f3353648c");
+    setIsSubmitting(true);
+    const object = { ...formData, access_key: "d0c8a8c2-7c76-4cb7-8682-2b6f3353648c" };
+    if (!object.message || object.message.trim() === '') {
+      object.message = "None";
+    }
+    const json = JSON.stringify(object);
 
     try {
         const response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
-            body: submitData
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: json
         });
 
-        if (response.ok) {
+        const result = await response.json();
+
+        if (result.success) {
             // Show success message
             Swal.fire({
                 title: "Thank you!",
@@ -39,9 +49,13 @@ const StudentEnquiryForm = () => {
                 email: '',
                 message: ''
             });
+        } else {
+            console.error("Web3Forms Error:", result.message);
         }
     } catch (error) {
         console.error("Error submitting form:", error);
+    } finally {
+        setIsSubmitting(false);
     }
   };
 
@@ -60,7 +74,7 @@ const StudentEnquiryForm = () => {
         <div className="text-center mb-12">
           <motion.h2 
             variants={SlideUp(0.4)} 
-            whileInView="animate" 
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }} 
             initial="initial" 
             className='text-4xl md:text-5xl font-bold text-white mb-4'
           >
@@ -68,7 +82,7 @@ const StudentEnquiryForm = () => {
           </motion.h2>
           <motion.p 
             variants={SlideUp(0.6)} 
-            whileInView="animate" 
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }} 
             initial="initial" 
             className='text-gray-200 max-w-2xl mx-auto'
           >
@@ -81,7 +95,7 @@ const StudentEnquiryForm = () => {
           {/* Illustration Section */}
           <motion.div 
             variants={SlideRight(0.4)} 
-            whileInView="animate" 
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }} 
             initial="initial" 
             className="hidden md:block relative"
           >
@@ -96,7 +110,7 @@ const StudentEnquiryForm = () => {
           {/* Form Section */}
           <motion.div 
             variants={SlideRight(0.6)} 
-            whileInView="animate" 
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }} 
             initial="initial" 
             className="flex flex-col items-center md:items-start"
           >
@@ -154,11 +168,11 @@ const StudentEnquiryForm = () => {
 
               <button 
                 type="submit" 
-                className="w-full bg-white mt-4 text-primary font-semibold px-6 py-3 rounded-xl
-                  transform hover:-translate-y-1 hover:shadow-lg hover:shadow-white/20 
-                  active:translate-y-0 transition-all duration-300"
+                disabled={isSubmitting}
+                className={`w-full bg-white mt-4 text-primary font-semibold px-6 py-3 rounded-xl
+                  transition-all duration-300 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'transform hover:-translate-y-1 hover:shadow-lg hover:shadow-white/20 active:translate-y-0'}`}
               >
-                Send Enquiry
+                {isSubmitting ? 'Submitting...' : 'Send Enquiry'}
               </button>
             </form>
           </motion.div>

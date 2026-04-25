@@ -131,7 +131,7 @@ const LatestServices = () => {
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <motion.div
           variants={SlideRight(0.2)}
-          whileInView="animate"
+          whileInView="animate" viewport={{ once: true, amount: 0.2 }}
           initial="initial"
           className="text-center mb-12"
         >
@@ -149,7 +149,7 @@ const LatestServices = () => {
             <motion.div
               key={service.id}
               variants={SlideRight(0.2 + index * 0.1)}
-              whileInView="animate"
+              whileInView="animate" viewport={{ once: true, amount: 0.2 }}
               initial="initial"
               className={`flex flex-col ${index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 items-center`}
             >

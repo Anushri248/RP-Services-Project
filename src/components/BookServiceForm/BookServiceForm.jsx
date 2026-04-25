@@ -7,7 +7,7 @@ const WEB3FORMS_ACCESS_KEY = 'd0c8a8c2-7c76-4cb7-8682-2b6f3353648c';
 const SERVICES = [
   'Air Import & Export Door-to-Door Service',
   'SEA LCL/FCL Import & Export Door-to-Door Service',
-  'CHA Activities (All custom-related work)',
+  'Specialized Breakbulk & Hazardous Cargo Services',
   'Export Related All Licences Registration',
   'General Insurance / Marine Insurance',
   'Support for New Exporters and Importers',
@@ -66,34 +66,47 @@ const BookServiceForm = ({ setShowBookServiceModal }) => {
       setErrors(validationErrors);
       return;
     }
-    setStatus('submitting');
-    const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+    const object = { ...form, access_key: WEB3FORMS_ACCESS_KEY };
+    if (!object.message || object.message.trim() === '') {
+      object.message = "None";
+    }
+    const json = JSON.stringify(object);
 
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: formData
-    });
-
-    if (response.ok) {
-      // Show success message with SweetAlert2
-      Swal.fire({
-        title: "Thank you!",
-        text: "Your service request has been submitted successfully",
-        icon: "success",
-        confirmButtonColor: "#667eea",
-        confirmButtonText: "OK"
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: json
       });
-      
-      // Clear the form
-      setForm({ name: '', email: '', phone: '', service: '', message: '' });
-      setErrors({});
-      setStatus('idle');
-      
-      // Close the modal after successful submission
-      handleClose();
-    } else {
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Show success message with SweetAlert2
+        Swal.fire({
+          title: "Thank you!",
+          text: "Your service request has been submitted successfully",
+          icon: "success",
+          confirmButtonColor: "#667eea",
+          confirmButtonText: "OK"
+        });
+        
+        // Clear the form
+        setForm({ name: '', email: '', phone: '', service: '', message: '' });
+        setErrors({});
+        setStatus('idle');
+        
+        // Close the modal after successful submission
+        handleClose();
+      } else {
+        setStatus('error');
+        console.error("Web3Forms Error:", result.message);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
       setStatus('error');
     }
   };

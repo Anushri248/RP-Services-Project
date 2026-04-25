@@ -15,7 +15,7 @@ const AboutUs = () => {
         <motion.div
           variants={SlideUp(0.2)}
           initial="initial"
-          whileInView="animate"
+          whileInView="animate" viewport={{ once: true, amount: 0.2 }}
           className="text-center"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -34,7 +34,7 @@ const AboutUs = () => {
           <motion.div
             variants={SlideUp(0.4)}
             initial="initial"
-            whileInView="animate"
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }}
             className="space-y-6 backdrop-blur-sm bg-white/50 p-8 rounded-2xl border border-white shadow-glass hover:transform hover:-translate-y-1 transition-all duration-300"
           >
             <div className="relative overflow-hidden rounded-xl">
@@ -66,7 +66,7 @@ const AboutUs = () => {
           <motion.div
             variants={SlideUp(0.6)}
             initial="initial"
-            whileInView="animate"
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }}
             className="space-y-6 backdrop-blur-sm bg-white/50 p-8 rounded-2xl border border-white shadow-glass hover:transform hover:-translate-y-1 transition-all duration-300"
           >
             <div className="relative overflow-hidden rounded-xl">

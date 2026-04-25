@@ -12,7 +12,7 @@ const Uses = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
                 
                 <motion.div  variants={SlideLeft(0.2)} 
-                  whileInView="animate" 
+                  whileInView="animate" viewport={{ once: true, amount: 0.2 }} 
                   initial="initial" className="space-y-6 backdrop-blur-sm bg-white/50 p-8 rounded-2xl shadow-glass hover:bg-gradient-to-r hover:from-secondary/5 hover:to-primary/5 transition-all duration-300">
                     <h1 className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-primary inline-block text-transparent bg-clip-text'>
                         Our Services

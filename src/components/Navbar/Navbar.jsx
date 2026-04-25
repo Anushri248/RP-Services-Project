@@ -34,7 +34,7 @@ const Navbar = () => {
         <motion.header 
             variants={SlideDown(0.2)} 
             initial="initial" 
-            whileInView="animate" 
+            whileInView="animate" viewport={{ once: true, amount: 0.2 }} 
             className='sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-white/10 w-full'
         >
             <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">

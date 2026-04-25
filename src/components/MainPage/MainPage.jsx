@@ -178,7 +178,7 @@ const MainPage = () => {
             <div className="space-y-4">
               <motion.span
                 variants={SlideUp(0.2)}
-                whileInView="animate"
+                whileInView="animate" viewport={{ once: true, amount: 0.2 }}
                 initial="initial"
                 className="text-sm md:text-base text-gray-200 bg-white/10 px-4 py-1 rounded-full backdrop-blur-sm md:ml-16"
               >
@@ -186,7 +186,7 @@ const MainPage = () => {
               </motion.span>
               <motion.h1
                 variants={SlideUp(0.4)}
-                whileInView="animate"
+                whileInView="animate" viewport={{ once: true, amount: 0.2 }}
                 initial="initial"
                 className="text-4xl md:text-6xl font-bold text-white leading-tight md:ml-16"
               >
@@ -197,7 +197,7 @@ const MainPage = () => {
             </div>
             <motion.p
               variants={SlideUp(0.6)}
-              whileInView="animate"
+              whileInView="animate" viewport={{ once: true, amount: 0.2 }}
               initial="initial"
               className="text-lg md:text-xl text-gray-200 max-w-xl leading-relaxed md:ml-16"
             >
@@ -207,7 +207,7 @@ const MainPage = () => {
             </motion.p>
             <motion.div
               variants={SlideUp(0.8)}
-              whileInView="animate"
+              whileInView="animate" viewport={{ once: true, amount: 0.2 }}
               initial="initial"
               className="flex flex-wrap gap-4 justify-center md:justify-start md:ml-16"
             >
@@ -235,7 +235,7 @@ const MainPage = () => {
         {/* Image Carousel Section */}
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.2 }}
           className="flex items-center justify-center p-4"
         >
           <div className="relative w-full max-w-4xl">

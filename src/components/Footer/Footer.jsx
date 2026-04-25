@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <motion.footer
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.2 }}
       className="bg-gradient-primary relative overflow-hidden"
     >
       <div className="container px-4 md:px-8 py-12">
