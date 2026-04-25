@@ -3,8 +3,8 @@ import ContactImage from '../../assets/contact-us.png';
 import Swal from 'sweetalert2';
 import './ContactUs.css';
 import {motion} from "framer-motion";
-import { SlideRight } from '../Utility/animation';
 import { SlideUp } from '../Utility/animation';
+import { SlideRight } from '../Utility/animation';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -15,22 +15,17 @@ const ContactUs = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    formData.append("access_key", "d0c8a8c2-7c76-4cb7-8682-2b6f3353648c");
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
+    const submitData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => submitData.append(key, value));
+    submitData.append("access_key", "d0c8a8c2-7c76-4cb7-8682-2b6f3353648c");
 
     try {
-        const res = await fetch("https://api.web3forms.com/submit", {
+        const response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            },
-            body: json
-        }).then((res) => res.json());
+            body: submitData
+        });
 
-        if (res.success) {
+        if (response.ok) {
             // Show success message
             Swal.fire({
                 title: "Thank you!",
@@ -39,7 +34,6 @@ const ContactUs = () => {
             });
             
             // Clear the form
-            event.target.reset();
             setFormData({
                 name: '',
                 email: '',
@@ -171,7 +165,6 @@ const ContactUs = () => {
                   className="w-full px-4 md:px-6 py-3 rounded-xl bg-white/5 border border-white/10 
                     text-white placeholder-white/30 focus:outline-none focus:border-white/30 
                     focus:bg-white/10 transition-all duration-300 hover:border-white/20 resize-none"
-                  required
                 ></textarea>
               </div>
 
